@@ -32,7 +32,7 @@ video.addEventListener('timeupdate', timeUpdate)
 
 video.addEventListener('loadedmetadata', function () {
   console.log("Metadata loaded");
-  videow.value = video.videoWidth;
+  //videow.value = video.videoWidth;
   videoInfo.innerHTML = [
     "Video size: " + video.videoWidth + "x" + video.videoHeight,
     "Video length: " + (Math.round(video.duration * 10) / 10) + "sec",
