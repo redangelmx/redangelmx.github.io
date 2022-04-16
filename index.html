@@ -19,8 +19,8 @@
 
     canvas {
       border: 1px solid #ddd;
-      max-width: 25vw;
-      max-height: 45vh;
+      max-width: 50vw;
+      max-height: 90vh;
       margin-bottom: 15px;
     }
 
@@ -33,7 +33,7 @@
     }
 
     video {
-      max-width: 45vw;
+      max-width: 50vw;
       max-height: 90vh;
       margin-bottom: 10px;
     }
@@ -121,6 +121,8 @@
       font-family: Roboto, sans-serif;
       padding: 8px;
       margin: 4px 0;
+      align-items:center;
+      justify-content: center;
     }
 
     .snap_button {
@@ -280,7 +282,10 @@
             <label for="video_file">Video from file</label>
           </div>
         </div>
-
+        <div class="mdc-form-field" >
+          <input id="range" name="range" type="range" min="0" max="100" value="70" />
+        </div>
+          
         <div class="instructions mdc-form-field">(Currently, youtube/vimeo video URLS are not supported, only URLs
           pointing to a video resource)</div>
       </div>
