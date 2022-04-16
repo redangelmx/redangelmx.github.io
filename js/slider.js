@@ -76,9 +76,9 @@ class RollCounterRange {
     console.log(value);
     const element=document.getElementByTagName(video);
     const custom_style= {
-          console.log(value+'vn');
+          //console.log(value+'vn');
       //max-width: value+"vw",
-      max-height: value+'vh'
+      //max-height: value+'vh'
     };
     Object.assign(element.style,custom_style);
    
