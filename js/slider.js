@@ -71,6 +71,15 @@ class RollCounterRange {
       this.rollDuration = transDur.substr(0,sLabelPos) * 1e3;
   }
   changeValue() {
+    //update resize
+    int value=this.el.value;
+    const element=document.getElementByTagName(video);
+    const custom_style= {
+      max-width: (value/2)+"vw";
+      max-height: value+"vh";
+    }
+    Object.assign(element.style,custom_style);
+   
     // keep the value within range
     if (+this.el.value > this.el.max)
       this.el.value = this.el.max;
