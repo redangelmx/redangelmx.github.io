@@ -122,7 +122,7 @@ function savePicture() {
   link.style.display = '';
   link.href = dataURL;
   var rnd = Math.round((Math.random() * 10000));
-  link.setAttribute("download", "video-capture-" + rnd + ".png");
+  link.setAttribute("download", "video-capture-" + rnd + ".jpg");
   link.click();
 }
 
