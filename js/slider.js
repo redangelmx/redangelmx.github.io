@@ -73,14 +73,15 @@ class RollCounterRange {
   changeValue() {
     //update resize
     const value=this.el.value; 
-    console.log([value+"vn"]);
+    console.log(value+"vh");
     const element=document.getElementById("canvas");
+    const elementv=document.getElementById("video");
     const custom_style= {
-     
-      "max-width": value+"vw",
-      "max-height": 100+"vh"
+      "max-width": (value/2)+"vw",
+      "max-height": value+"vh"
     };
     Object.assign(element.style,custom_style);
+    Object.assign(elementv.style,custom_style);
    
     // keep the value within range
     if (+this.el.value > this.el.max)
