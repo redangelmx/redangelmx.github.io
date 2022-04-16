@@ -72,10 +72,11 @@ class RollCounterRange {
   }
   changeValue() {
     //update resize
-    const value=this.el.value;
+    const value=this.el.value; 
+    console.log([value+"vn"]);
     const element=document.getElementById("canvas");
     const custom_style= {
-      console.log([value+"vn"]);
+     
       //max-width: value+"vw",
       max-height: [value+"vh"]
     };
