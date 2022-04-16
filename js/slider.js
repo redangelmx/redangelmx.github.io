@@ -77,8 +77,8 @@ class RollCounterRange {
     const element=document.getElementById("canvas");
     const custom_style= {
      
-      //max-width: value+"vw",
-      max-height: [value+"vh"]
+      "max-width": value+"vw",
+      "max-height": 100+"vh"
     };
     Object.assign(element.style,custom_style);
    
