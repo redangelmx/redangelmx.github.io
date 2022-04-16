@@ -72,7 +72,7 @@ class RollCounterRange {
   }
   changeValue() {
     //update resize
-    int value=this.el.value;
+    const value=this.el.value;
     const element=document.getElementByTagName(video);
     const custom_style= {
       max-width: (value/2)+"vw",
