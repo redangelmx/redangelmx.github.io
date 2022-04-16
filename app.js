@@ -117,7 +117,7 @@ function loadVideoURL(url) {
 }
 
 function savePicture() {
-  var dataURL = canvas.toDataURL();
+  var dataURL = canvas.toDataURL("image/jpg");
   var link = document.getElementById("imagelink");
   link.style.display = '';
   link.href = dataURL;
