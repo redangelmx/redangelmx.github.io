@@ -5,6 +5,12 @@
 #reset-range *::after {
   all: revert;
 }
+#reset-range {
+  all: initial;
+  * {
+    all: unset;
+  }
+}
 * {
   border: 0;
   box-sizing: border-box;
