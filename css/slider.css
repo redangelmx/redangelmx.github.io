@@ -1,4 +1,10 @@
 /* Reset */
+#reset-range::before,
+#reset-range::after,
+#reset-range *::before,
+#reset-range *::after {
+  all: revert;
+}
 * {
   border: 0;
   box-sizing: border-box;
