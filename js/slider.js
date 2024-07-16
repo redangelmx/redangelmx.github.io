@@ -39,20 +39,20 @@ class RollCounterRange {
     srValue.textContent = "0";
     counter.appendChild(srValue);
     // column for each digit
-    for (let D of this.el.max.split("")) {
+    /*for (let D of this.el.max.split("")) {
       let digitCol = document.createElement("span");
       digitCol.className = "range__counter-column";
       digitCol.setAttribute("aria-hidden","true");
       counter.appendChild(digitCol);
       // digits (blank, 0–9, fake 0)
-      /*for (let d = 0; d <= 11; ++d) {
+      for (let d = 0; d <= 11; ++d) {
         let digit = document.createElement("span");
         digit.className = "range__counter-digit";
         if (d > 0)
           digit.textContent = d == 11 ? 0 : `${d - 1}`;
         digitCol.appendChild(digit);
-      }*/
-    }
+      }
+    }*/
     this.srValue = srValue;
     this.fill = rangeFill;
     this.digitCols = counter.querySelectorAll(".range__counter-column");
