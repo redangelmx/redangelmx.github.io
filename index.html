@@ -256,7 +256,7 @@
       overflow: hidden;
       margin-bottom: 16px;
       background: #000;
-      width: 100%;
+      max-width: 100%;
       max-height: 60vh;
     }
 
@@ -267,12 +267,12 @@
     }
 
     canvas {
-      max-width: 100%;
       height: auto;
-      max-height: 60vh;
       border-radius: 8px;
       background: #000;
       margin-bottom: 16px;
+      max-width: 100%;
+      max-height: 60vh;
     }
 
     .external-controls {
@@ -329,7 +329,6 @@
       height: 6px;
       border-radius: 3px;
       background: rgba(55, 65, 81, 0.7);
-      overflow: hidden;
       -webkit-appearance: none;
       appearance: none;
     }
@@ -510,23 +509,34 @@
         <button class="btn btn-primary" onclick="loadVideoURL(document.getElementById('videourl').value)">
           Load Video
         </button>
-            <div class="card">
+      </div>
+      
+      <div class="instructions">
+        <p>For YouTube or Vimeo videos:</p>
+        <ul>
+          <li>Use a service to convert to MP4 format</li>
+          <li>Use the direct download link here, or</li>
+          <li>Download the file and use "From File" option</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Size Settings -->
+    <div class="card">
+      <h2 class="section-title">Size Settings</h2>
       <div class="dimensions">
         <div style="flex: 1;">
-          <label for="videow">Width</label>
+          <label for="videow">Output Width (for save)</label>
           <input type="number" id="videow" value="720" onchange="resizeBoth()" min="100">
           <div class="size-label">pixels</div>
         </div>
         <div style="flex: 1;">
-          <label for="resizeSlider">Resize</label>
+          <label for="resizeSlider">Display Resize</label>
           <input type="range" id="resizeSlider" min="10" max="100" value="70" oninput="handleResizeSlider(this.value)">
           <div class="size-label"><span id="resizeValue">70</span>%</div>
         </div>
       </div>
     </div>
-      </div>
-
-
 
     <!-- Video Preview and Thumbnail side by side -->
     <div class="content-grid">
@@ -568,8 +578,8 @@
             </button>
             <button class="control-btn" onclick="goToTime(video,video.currentTime+5)" title="Forward 5 seconds">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="13 19 22 12 13 5"></polyline>
-                <polyline points="2 19 11 12 2 5"></polyline>
+                <polyline points="13 5 22 12 13 19"></polyline>
+                <polyline points="2 5 11 12 2 19"></polyline>
               </svg>
             </button>
             <button class="control-btn" onclick="goToTime(video,video.duration)" title="Go to end">
@@ -640,12 +650,7 @@
     // Handle resize slider
     function handleResizeSlider(value) {
       document.getElementById('resizeValue').textContent = value;
-      // Adjust the canvas and video size based on slider value
-      if (typeof video !== 'undefined' && video.duration) {
-        const width = Math.floor(originalVideoWidth * (value / 100));
-        document.getElementById('videow').value = width;
-        resizeBoth();
-      }
+      resizeBoth();
     }
 
     // Update play/pause button icon
@@ -672,10 +677,7 @@
           originalVideoWidth = video.videoWidth;
           originalVideoHeight = video.videoHeight;
           
-          // Set initial width based on resize slider
-          const resizeValue = document.getElementById('resizeSlider').value;
-          const width = Math.floor(originalVideoWidth * (resizeValue / 100));
-          document.getElementById('videow').value = width;
+          // Resize to current settings without changing output width
           resizeBoth();
         });
 
@@ -706,35 +708,35 @@
 
     // Resize both video and canvas
     function resizeBoth() {
-      const width = parseInt(document.getElementById('videow').value);
+      if (originalVideoWidth === 0) return;
+
+      const outputWidth = parseInt(document.getElementById('videow').value) || 720;
+      const aspect = originalVideoHeight / originalVideoWidth;
+      const outputHeight = Math.floor(outputWidth * aspect);
       
-      // Calculate height based on original aspect ratio
-      const height = Math.floor((originalVideoHeight / originalVideoWidth) * width);
-      
-      // Update canvas size
       const canvas = document.getElementById('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
+      canvas.width = outputWidth;
+      canvas.height = outputHeight;
       
-      // Update video container size
+      const displayScale = document.getElementById('resizeSlider').value / 100;
+      const displayWidth = Math.floor(outputWidth * displayScale);
+      const displayHeight = Math.floor(outputHeight * displayScale);
+      
       const videoContainer = document.querySelector('.video-container');
-      videoContainer.style.width = `${width}px`;
-      videoContainer.style.height = `${height}px`;
+      videoContainer.style.width = `${displayWidth}px`;
+      videoContainer.style.height = `${displayHeight}px`;
       videoContainer.style.maxWidth = '100%';
+      videoContainer.style.maxHeight = '60vh';
       
-      // Update resize slider to match the current percentage
-      const percentage = Math.floor((width / originalVideoWidth) * 100);
-      document.getElementById('resizeSlider').value = percentage;
-      document.getElementById('resizeValue').textContent = percentage;
+      canvas.style.width = `${displayWidth}px`;
+      canvas.style.height = `${displayHeight}px`;
       
       // If we have a captured image, redraw it at the new size
       if (lastFullImage) {
         const ctx = canvas.getContext('2d');
         const img = new Image();
         img.onload = function() {
-          ctx.drawImage(img, 0, 0, width, height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         };
         img.src = lastFullImage;
       }
@@ -790,7 +792,7 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       
-      // Draw the current video frame to canvas at current size
+      // Draw the current video frame to canvas at output resolution
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       
       // Capture full resolution image for resizing
