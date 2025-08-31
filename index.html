@@ -90,27 +90,33 @@
   </header>
 
   <main>
-  <div class="card" id="sourceSettings" style="font-size:0.8rem; padding:8px;">
+<div class="card" id="sourceSettings" style="font-size:0.8rem; padding:8px;">
   <h2 class="section-title" style="margin:0 0 6px; font-size:1rem;">Source & Settings</h2>
 
-  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+  <div style="display:flex; gap:20px; align-items:center; flex-wrap:nowrap;">
 
     <!-- 1) source type -->
-    <div style="display:flex; align-items:center; gap:6px; white-space:nowrap;">
+    <div style="display:flex; align-items:center; gap:8px; white-space:nowrap; flex:1;">
+      <!-- File option -->
       <label style="display:flex; align-items:center; gap:3px;">
-        <input type="radio" id="video_file" name="video_source" checked onchange="showInput('select-file')"> File
+        <input type="radio" id="video_file" name="video_source" checked onchange="showInput('file')"> File
       </label>
-      <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()" 
-        style="font-size:0.75rem; padding:3px;">
-      
+      <div id="fileInputWrapper" style="flex:1; min-width:180px;">
+        <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()" 
+          style="font-size:0.75rem; padding:3px; width:100%;">
+      </div>
+
+      <!-- URL option -->
       <label style="display:flex; align-items:center; gap:3px; margin-left:8px;">
-        <input type="radio" id="video_url" name="video_source" onchange="showInput('select-url')"> URL
+        <input type="radio" id="video_url" name="video_source" onchange="showInput('url')"> URL
       </label>
-      <input type="text" id="videourl" placeholder="https://" 
-        style="width:140px; padding:3px; font-size:0.75rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);" 
-        onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
-      <button class="btn btn-primary" style="font-size:0.75rem; padding:2px 6px;"
-        onclick="loadVideoURL(document.getElementById('videourl').value)">Load</button>
+      <div id="urlInputWrapper" style="display:none; flex:1; min-width:160px; align-items:center; gap:4px;">
+        <input type="text" id="videourl" placeholder="https://" 
+          style="flex:1; padding:3px; font-size:0.75rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);" 
+          onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
+        <button class="btn btn-primary" style="font-size:0.75rem; padding:2px 6px; white-space:nowrap;"
+          onclick="loadVideoURL(document.getElementById('videourl').value)">Load</button>
+      </div>
     </div>
 
     <!-- 2) width -->
@@ -122,16 +128,15 @@
     </div>
 
     <!-- 3) slider -->
-    <div style="display:flex; align-items:center; gap:4px; width: 100px; margin-left:">
+    <div style="display:flex; align-items:center; gap:4px; white-space:nowrap;">
       <label for="resizeSlider">Display:</label>
       <input type="range" id="resizeSlider" min="10" max="100" value="80" 
-        oninput="updateDisplaySize(this.value)" class="slider" style="flex:1;">
+        oninput="updateDisplaySize(this.value)" class="slider" style="width:100px;">
       <span id="resizeValue" style="font-size:0.75rem;">80%</span>
     </div>
 
   </div>
 </div>
-
 
 
     <!-- VIDEO + THUMBNAIL -->
@@ -208,6 +213,11 @@
     let outputWidth = 720, displayScale = 1.0;
     let aspectRatio = 9/16; // height/width
     let currentVideoName = 'thumbnail';
+
+    function showInput(type) {
+  document.getElementById("fileInputWrapper").style.display = (type === "file") ? "block" : "none";
+  document.getElementById("urlInputWrapper").style.display = (type === "url") ? "flex" : "none";
+}
 
     function showInput(id){ document.getElementById('select-file').style.display='none'; document.getElementById('select-url').style.display='none'; document.getElementById(id).style.display='block'; }
 
