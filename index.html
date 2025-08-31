@@ -90,44 +90,54 @@
   </header>
 
   <main>
-    <!-- SOURCE and SETTINGS (ordered) -->
-    <div class="card" id="sourceSettings">
-      <h2 class="section-title">Source and Settings</h2>
+   <div class="card" id="sourceSettings" style="font-size:0.8rem; padding:8px;">
+  <h2 class="section-title" style="margin:0 0 6px; font-size:1rem;">Source & Settings</h2>
 
-      <!-- 1) source type -->
-      <div style="display:flex; gap:12px; margin-bottom:12px;">
-        <label style="display:flex; align-items:center; gap:8px;"><input type="radio" id="video_file" name="video_source" checked onchange="showInput('select-file')"> From File</label>
-        <label style="display:flex; align-items:center; gap:8px;"><input type="radio" id="video_url" name="video_source" onchange="showInput('select-url')"> From URL</label>
-      </div>
+  <!-- 1) source type -->
+  <div style="display:flex; gap:8px; margin-bottom:6px; align-items:center;">
+    <label style="display:flex; align-items:center; gap:3px;">
+      <input type="radio" id="video_file" name="video_source" checked onchange="showInput('select-file')"> File
+    </label>
+    <label style="display:flex; align-items:center; gap:3px;">
+      <input type="radio" id="video_url" name="video_source" onchange="showInput('select-url')"> URL
+    </label>
+  </div>
 
-      <!-- 2) file input -->
-      <div id="select-file" style="margin-bottom:8px;">
-        <label for="videofile" style="font-size:0.95rem; color:var(--text-light); margin-bottom:6px; display:block">Choose file</label>
-        <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()">
-      </div>
+  <!-- 2) file input -->
+  <div id="select-file" style="margin-bottom:4px;">
+    <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()" 
+      style="font-size:0.8rem; padding:4px;">
+  </div>
 
-      <!-- 3) url input -->
-      <div id="select-url" style="display:none; margin-bottom:8px;">
-        <label for="videourl" style="font-size:0.95rem; color:var(--text-light); margin-bottom:6px; display:block">Video URL</label>
-        <input type="text" id="videourl" placeholder="https://" style="width:100%; padding:8px; background:#374151; border:1px solid var(--border-color); color:var(--text-color);" onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
-        <div style="margin-top:8px;"><button class="btn btn-primary" onclick="loadVideoURL(document.getElementById('videourl').value)">Load Video</button></div>
-      </div>
-
-      <!-- 5) output settings -->
-      <div class="dimensions" style="margin-top:12px;">
-        <div style="flex:1">
-          <label for="outputWidth">Output Width (save)</label>
-          <input type="number" id="outputWidth" value="720" min="100" onchange="updateOutputSize()" style="width:100%; padding:8px; background:#374151; border:1px solid var(--border-color); color:var(--text-color);">
-          <div class="size-label">pixels</div>
-        </div>
-
-        <div style="flex:1">
-          <label for="resizeSlider">Display Size</label>
-          <input type="range" id="resizeSlider" min="10" max="100" value="80" oninput="updateDisplaySize(this.value)" class="slider">
-          <div class="size-label"><span id="resizeValue">80</span>%</div>
-        </div>
-      </div>
+  <!-- 3) url input -->
+  <div id="select-url" style="display:none; margin-bottom:4px;">
+    <div style="display:flex; gap:6px;">
+      <input type="text" id="videourl" placeholder="https://" 
+        style="flex:1; padding:4px; font-size:0.8rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);" 
+        onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
+      <button class="btn btn-primary" style="font-size:0.8rem; padding:3px 8px;"
+        onclick="loadVideoURL(document.getElementById('videourl').value)">Load</button>
     </div>
+  </div>
+
+  <!-- 4) output + resize inline -->
+  <div class="dimensions" style="display:flex; gap:8px; margin-top:4px;">
+    <div style="flex:1;">
+      <label for="outputWidth" style="display:block; margin-bottom:2px;">Width</label>
+      <input type="number" id="outputWidth" value="720" min="100" onchange="updateOutputSize()" 
+        style="width:100%; padding:4px; font-size:0.8rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);">
+      <div class="size-label" style="text-align:right; font-size:0.7rem;">px</div>
+    </div>
+
+    <div style="flex:1;">
+      <label for="resizeSlider" style="display:block; margin-bottom:2px;">Display</label>
+      <input type="range" id="resizeSlider" min="10" max="100" value="80" 
+        oninput="updateDisplaySize(this.value)" class="slider" style="width:100%;">
+      <div class="size-label" style="text-align:right; font-size:0.7rem;"><span id="resizeValue">80</span>%</div>
+    </div>
+  </div>
+</div>
+
 
     <!-- VIDEO + THUMBNAIL -->
     <div class="content-grid" id="contentGrid">
