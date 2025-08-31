@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +13,8 @@
       --primary-hover: #4f46e5;
       --primary-light: #818cf8;
       --primary-glow: rgba(99, 102, 241, 0.5);
+      --neon-glow: rgba(99, 102, 241, 0.8);
+      --neon-shadow: 0 0 8px rgba(99, 102, 241, 0.6), 0 0 16px rgba(99, 102, 241, 0.4);
       --text-color: #e5e7eb;
       --text-light: #9ca3af;
       --bg-color: #111827;
@@ -41,7 +42,7 @@
 
     header {
       background: #1a2435;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow), var(--neon-shadow);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -65,12 +66,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      text-shadow: 0 0 10px var(--primary-glow);
+      text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--neon-glow);
     }
 
     .logo-icon {
       font-size: 1.8rem;
-      filter: drop-shadow(0 0 5px var(--primary-glow));
+      filter: drop-shadow(0 0 5px var(--primary-glow)) drop-shadow(0 0 10px var(--neon-glow));
     }
 
     .actions {
@@ -104,13 +105,13 @@
     .btn-primary {
       background: var(--primary-color);
       color: white;
-      box-shadow: 0 0 5px var(--primary-glow);
+      box-shadow: 0 0 5px var(--primary-glow), var(--neon-shadow);
     }
 
     .btn-primary:hover {
       background: var(--primary-hover);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4), 0 0 15px var(--primary-glow);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4), 0 0 15px var(--primary-glow), var(--neon-shadow);
     }
 
     .btn-outline {
@@ -122,7 +123,7 @@
     .btn-outline:hover {
       border-color: var(--primary-light);
       color: var(--primary-color);
-      box-shadow: 0 0 10px var(--primary-glow);
+      box-shadow: 0 0 10px var(--primary-glow), var(--neon-shadow);
     }
 
     main {
@@ -138,14 +139,14 @@
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow), var(--neon-shadow);
       padding: 24px;
       border: 1px solid var(--border-color);
       transition: var(--transition);
     }
 
     .card:hover {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4), var(--neon-shadow);
     }
 
     .section-title {
@@ -153,6 +154,7 @@
       font-weight: 600;
       margin-bottom: 16px;
       color: var(--text-color);
+      text-shadow: 0 0 5px var(--neon-glow);
     }
 
     .input-group {
@@ -185,7 +187,7 @@
     input[type="file"]:focus {
       outline: none;
       border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3), var(--neon-shadow);
     }
 
     input[type="file"] {
@@ -198,6 +200,7 @@
     input[type="file"]:hover {
       border-color: var(--primary-light);
       background: rgba(99, 102, 241, 0.1);
+      box-shadow: var(--neon-shadow);
     }
 
     .radio-group {
@@ -238,7 +241,7 @@
     .radio-option input:checked {
       border-color: var(--primary-color);
       background: var(--primary-color);
-      box-shadow: 0 0 8px var(--primary-glow);
+      box-shadow: 0 0 8px var(--primary-glow), var(--neon-shadow);
     }
 
     .radio-option input:checked::after {
@@ -259,6 +262,7 @@
       background: #000;
       max-width: 100%;
       max-height: 60vh;
+      box-shadow: var(--neon-shadow);
     }
 
     video {
@@ -274,6 +278,7 @@
       margin-bottom: 16px;
       max-width: 100%;
       max-height: 60vh;
+      box-shadow: var(--neon-shadow);
     }
 
     .external-controls {
@@ -282,6 +287,7 @@
       border-radius: 8px;
       margin-top: 8px;
       border: 1px solid var(--border-color);
+      box-shadow: var(--neon-shadow);
     }
 
     .controls-row {
@@ -310,13 +316,13 @@
     .control-btn:hover {
       background: var(--primary-color);
       color: white;
-      box-shadow: 0 0 8px var(--primary-glow);
+      box-shadow: 0 0 8px var(--primary-glow), var(--neon-shadow);
     }
 
     .control-btn.active {
       background: var(--primary-color);
       color: white;
-      box-shadow: 0 0 10px var(--primary-glow);
+      box-shadow: 0 0 10px var(--primary-glow), var(--neon-shadow);
     }
 
     .slider-container {
@@ -342,7 +348,7 @@
       background: white;
       cursor: pointer;
       border: 2px solid var(--primary-color);
-      box-shadow: 0 0 5px var(--primary-glow);
+      box-shadow: 0 0 5px var(--primary-glow), var(--neon-shadow);
     }
 
     .slider::-moz-range-thumb {
@@ -352,7 +358,7 @@
       background: white;
       cursor: pointer;
       border: 2px solid var(--primary-color);
-      box-shadow: 0 0 5px var(--primary-glow);
+      box-shadow: 0 0 5px var(--primary-glow), var(--neon-shadow);
     }
 
     .info-text {
@@ -483,9 +489,9 @@
   </header>
 
   <main>
-    <!-- Source Panel (on top) -->
+    <!-- Merged Source and Size Settings Panel -->
     <div class="card">
-      <h2 class="section-title">Source</h2>
+      <h2 class="section-title">Source and Settings</h2>
       
       <div class="radio-group">
         <div class="radio-option">
@@ -511,30 +517,12 @@
           Load Video
         </button>
       </div>
-      
-      <div class="instructions">
-        <p>For YouTube or Vimeo videos:</p>
-        <ul>
-          <li>Use a service to convert to MP4 format</li>
-          <li>Use the direct download link here, or</li>
-          <li>Download the file and use "From File" option</li>
-        </ul>
-      </div>
-    </div>
 
-    <!-- Size Settings -->
-    <div class="card">
-      <h2 class="section-title">Size Settings</h2>
       <div class="dimensions">
         <div style="flex: 1;">
           <label for="videow">Output Width (for save)</label>
           <input type="number" id="videow" value="720" onchange="resizeBoth()" min="100">
           <div class="size-label">pixels</div>
-        </div>
-        <div style="flex: 1;">
-          <label for="resizeSlider">Display Resize</label>
-          <input type="range" id="resizeSlider" min="10" max="100" value="70" oninput="handleResizeSlider(this.value)">
-          <div class="size-label"><span id="resizeValue">70</span>%</div>
         </div>
       </div>
     </div>
@@ -648,12 +636,6 @@
       slider.style.background = `linear-gradient(to right, var(--primary-color) ${percent}%, rgba(55, 65, 81, 0.7) ${percent}%)`;
     }
 
-    // Handle resize slider
-    function handleResizeSlider(value) {
-      document.getElementById('resizeValue').textContent = value;
-      resizeBoth();
-    }
-
     // Update play/pause button icon
     function updatePlayPauseIcon() {
       const icon = document.getElementById('playPauseIcon');
@@ -678,7 +660,7 @@
           originalVideoWidth = video.videoWidth;
           originalVideoHeight = video.videoHeight;
           
-          // Resize to current settings without changing output width
+          // Resize to current settings without changing preview size
           resizeBoth();
         });
 
@@ -719,9 +701,8 @@
       canvas.width = outputWidth;
       canvas.height = outputHeight;
       
-      const displayScale = document.getElementById('resizeSlider').value / 100;
-      const displayWidth = Math.floor(outputWidth * displayScale);
-      const displayHeight = Math.floor(outputHeight * displayScale);
+      const displayWidth = outputWidth;
+      const displayHeight = outputHeight;
       
       const videoContainer = document.querySelector('.video-container');
       videoContainer.style.width = `${displayWidth}px`;
@@ -749,8 +730,6 @@
     // Initial slider value update
     document.addEventListener('DOMContentLoaded', function() {
       updateSliderTrack();
-      document.getElementById('resizeSlider').value = 70;
-      document.getElementById('resizeValue').textContent = 70;
     });
 
     // Add event listener to slider
@@ -826,4 +805,3 @@
 </body>
 
 </html>
-```
