@@ -12,14 +12,16 @@
       --primary-color: #6366f1;
       --primary-hover: #4f46e5;
       --primary-light: #818cf8;
-      --text-color: #1f2937;
-      --text-light: #6b7280;
-      --bg-color: #f9fafb;
-      --card-bg: #ffffff;
-      --border-color: #e5e7eb;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --secondary-color: #ec4899;
+      --text-color: #e2e8f0;
+      --text-light: #cbd5e1;
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
       --radius: 12px;
       --transition: all 0.3s ease;
+      --glow: 0 0 20px rgba(99, 102, 241, 0.4);
     }
 
     * {
@@ -38,8 +40,8 @@
     }
 
     header {
-      background: white;
-      box-shadow: var(--shadow);
+      background: linear-gradient(90deg, #1e293b, #334155);
+      box-shadow: var(--glow);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -59,10 +61,13 @@
     .logo {
       font-size: 1.5rem;
       font-weight: 700;
-      color: var(--primary-color);
+      background: linear-gradient(90deg, var(--primary-light), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       display: flex;
       align-items: center;
       gap: 8px;
+      text-shadow: var(--glow);
     }
 
     .logo-icon {
@@ -89,23 +94,27 @@
     }
 
     .btn-text {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.1);
       color: var(--text-color);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .btn-text:hover {
-      background: rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: var(--glow);
+      border-color: var(--primary-light);
     }
 
     .btn-primary {
       background: var(--primary-color);
       color: white;
+      box-shadow: var(--glow);
     }
 
     .btn-primary:hover {
       background: var(--primary-hover);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
     }
 
     .btn-outline {
@@ -116,7 +125,8 @@
 
     .btn-outline:hover {
       border-color: var(--primary-light);
-      color: var(--primary-color);
+      color: var(--primary-light);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
     }
 
     main {
@@ -136,10 +146,12 @@
       padding: 24px;
       border: 1px solid var(--border-color);
       transition: var(--transition);
+      backdrop-filter: blur(4px);
     }
 
     .card:hover {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 25px -3px rgba(99, 102, 241, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-light);
     }
 
     .section-title {
@@ -147,6 +159,10 @@
       font-weight: 600;
       margin-bottom: 16px;
       color: var(--text-color);
+      background: linear-gradient(90deg, var(--primary-light), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
     }
 
     .input-group {
@@ -170,7 +186,8 @@
       border: 1px solid var(--border-color);
       font-size: 1rem;
       transition: var(--transition);
-      background-color: white;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-color);
     }
 
     input[type="text"]:focus,
@@ -179,18 +196,20 @@
       outline: none;
       border-color: var(--primary-light);
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
     input[type="file"] {
       border: 2px dashed var(--border-color);
       border-radius: 8px;
       padding: 16px;
-      background: #fafafa;
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text-light);
     }
 
     input[type="file"]:hover {
       border-color: var(--primary-light);
-      background: #f5f5ff;
+      background: rgba(99, 102, 241, 0.1);
     }
 
     .radio-group {
@@ -216,6 +235,7 @@
       align-items: center;
       justify-content: center;
       transition: var(--transition);
+      position: relative;
     }
 
     .radio-option input::after {
@@ -228,8 +248,9 @@
     }
 
     .radio-option input:checked {
-      border-color: var(--primary-color);
+      border-color: var(--primary-light);
       background: var(--primary-color);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
     }
 
     .radio-option input:checked::after {
@@ -242,43 +263,36 @@
       margin-bottom: 0;
     }
 
-    .video-container {
+    .video-container, canvas {
       position: relative;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 16px;
       background: #000;
+      width: 100%;
+      aspect-ratio: 16 / 9;
     }
 
     video {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
       display: block;
     }
 
     canvas {
       width: 100%;
-      height: auto;
-      max-height: 60vh;
-      border-radius: 8px;
-      background: #000;
-      margin-bottom: 16px;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .video-controls {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.7);
+      margin-top: 16px;
       padding: 16px;
-      border-radius: 0 0 8px 8px;
-      transition: var(--transition);
-      opacity: 0;
-    }
-
-    .video-container:hover .video-controls {
-      opacity: 1;
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(4px);
     }
 
     .controls-row {
@@ -289,11 +303,11 @@
     }
 
     .control-btn {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
       border: none;
       border-radius: 8px;
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -301,36 +315,42 @@
       transition: var(--transition);
       font-size: 1.1rem;
       color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .control-btn:hover {
       background: var(--primary-light);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
     .control-btn.active {
       background: var(--primary-color);
       color: white;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
     }
 
     .slider-container {
       width: 100%;
       padding: 0 8px;
-      margin: 8px 0;
+      margin: 12px 0;
     }
 
     .slider {
       width: 100%;
       height: 6px;
       border-radius: 3px;
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.2);
       overflow: hidden;
     }
 
     .slider-track {
       height: 100%;
       width: 0;
-      background: white;
+      background: var(--primary-light);
       border-radius: 3px;
+      transition: width 0.1s;
     }
 
     .slider::-webkit-slider-thumb {
@@ -341,7 +361,13 @@
       background: white;
       cursor: pointer;
       border: 2px solid var(--primary-color);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
     }
 
     .slider::-moz-range-thumb {
@@ -351,7 +377,13 @@
       background: white;
       cursor: pointer;
       border: 2px solid var(--primary-color);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .slider::-moz-range-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
     }
 
     .info-text {
@@ -362,12 +394,13 @@
     }
 
     .instructions {
-      background-color: #f8fafc;
-      border: 1px solid #e2e8f0;
+      background-color: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
       border-radius: 8px;
       padding: 16px;
       margin: 16px 0;
       font-size: 0.95rem;
+      backdrop-filter: blur(4px);
     }
 
     .instructions ul {
@@ -413,10 +446,23 @@
       word-break: break-all;
       font-size: 0.9rem;
       padding: 8px 12px;
-      background: #f8fafc;
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 6px;
-      border: 1px solid #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: none;
+    }
+
+    .resize-controls {
+      margin: 16px 0;
+      padding: 16px;
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(4px);
+    }
+
+    .resize-controls .input-group {
+      margin-bottom: 0;
     }
 
     @media (max-width: 1024px) {
@@ -439,8 +485,8 @@
       }
       
       .control-btn {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         font-size: 1rem;
       }
       
@@ -532,53 +578,53 @@
             <source src="blank.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          
-          <div class="video-controls" id="videoControls" style="display:none">
-            <div class="slider-container">
-              <input type="range" id="slider" class="slider" 
-                     oninput="goToTime(video,this.value)" 
-                     onmouseover="this.title=Math.floor(this.value)+'s'">
-              <div class="slider-track" id="slider-track"></div>
-            </div>
-            
-            <div class="controls-row">
-              <button class="control-btn" onclick="goToTime(video,0)" title="Go to start">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                  <line x1="19" y1="12" x2="23" y2="12"></line>
-                </svg>
-              </button>
-              <button class="control-btn" onclick="goToTime(video,video.currentTime-5)" title="Back 5 seconds">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="12 19 12 5 4 5"></polyline>
-                  <polyline points="20 19 20 5 12 5"></polyline>
-                </svg>
-                <span>5s</span>
-              </button>
-              <button class="control-btn" id="playPauseBtn" onclick="video.paused?video.play():video.pause()" title="Play/Pause">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="playPauseIcon">
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-              </button>
-              <button class="control-btn" onclick="goToTime(video,video.currentTime+5)" title="Forward 5 seconds">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                  <polyline points="15 18 21 12 15 6"></polyline>
-                </svg>
-                <span>5s</span>
-              </button>
-              <button class="control-btn" onclick="goToTime(video,video.duration)" title="Go to end">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="19 17 19 7 5 12 19 17"></polygon>
-                  <line x1="23" y1="12" x2="19" y2="12"></line>
-                </svg>
-              </button>
-            </div>
-          </div>
         </div>
         
         <div id="videoInfo" class="info-text" style="display: none;">
           Duration: <span id="duration">00:00</span>
+        </div>
+        
+        <div class="video-controls" id="videoControls" style="display:none">
+          <div class="slider-container">
+            <input type="range" id="slider" class="slider" 
+                   oninput="goToTime(video,this.value)" 
+                   onmouseover="this.title=Math.floor(this.value)+'s'">
+            <div class="slider-track" id="slider-track"></div>
+          </div>
+          
+          <div class="controls-row">
+            <button class="control-btn" onclick="goToTime(video,0)" title="Go to start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                <line x1="19" y1="12" x2="23" y2="12"></line>
+              </svg>
+            </button>
+            <button class="control-btn" onclick="goToTime(video,video.currentTime-5)" title="Back 5 seconds">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="12 19 12 5 4 5"></polyline>
+                <polyline points="20 19 20 5 12 5"></polyline>
+              </svg>
+              <span>5s</span>
+            </button>
+            <button class="control-btn" id="playPauseBtn" onclick="video.paused?video.play():video.pause()" title="Play/Pause">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="playPauseIcon">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+            <button class="control-btn" onclick="goToTime(video,video.currentTime+5)" title="Forward 5 seconds">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+                <polyline points="15 18 21 12 15 6"></polyline>
+              </svg>
+              <span>5s</span>
+            </button>
+            <button class="control-btn" onclick="goToTime(video,video.duration)" title="Go to end">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="19 17 19 7 5 12 19 17"></polygon>
+                <line x1="23" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -587,43 +633,48 @@
         <h2 class="section-title">Thumbnail</h2>
         
         <canvas id="canvas" width="640" height="480"></canvas>
-        
-        <div class="dimensions">
-          <div style="flex: 1;">
-            <label for="videow">Width</label>
-            <input type="number" id="videow" value="720" onchange="resize()" min="100">
-            <div class="size-label">pixels</div>
-          </div>
-          <div style="flex: 1;">
-            <label for="resizeSlider">Resize</label>
-            <input type="range" id="resizeSlider" min="10" max="100" value="70" oninput="handleResizeSlider(this.value)">
-            <div class="size-label"><span id="resizeValue">70</span>%</div>
-          </div>
-        </div>
-        
-        <div class="action-buttons">
-          <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-              <circle cx="12" cy="13" r="4"></circle>
-            </svg>
-            <span>Capture Frame</span>
-          </button>
-          
-          <button id="save" class="btn btn-outline" onclick="savePicture()" disabled>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            <span>Save Image</span>
-          </button>
-        </div>
-        
-        <div id="snapsize" class="info-text" style="margin-top: 16px;"></div>
-        
-        <div class="image-link" id="imagelink"></div>
       </div>
+    </div>
+    
+    <!-- Resize Controls -->
+    <div class="card resize-controls">
+      <h2 class="section-title">Resize Controls</h2>
+      
+      <div class="dimensions">
+        <div style="flex: 1;">
+          <label for="videow">Width</label>
+          <input type="number" id="videow" value="720" onchange="resize()" min="100">
+          <div class="size-label">pixels</div>
+        </div>
+        <div style="flex: 1;">
+          <label for="resizeSlider">Resize</label>
+          <input type="range" id="resizeSlider" min="10" max="100" value="70" oninput="handleResizeSlider(this.value)">
+          <div class="size-label"><span id="resizeValue">70</span>%</div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          <span>Capture Frame</span>
+        </button>
+        
+        <button id="save" class="btn btn-outline" onclick="savePicture()" disabled>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Save Image</span>
+        </button>
+      </div>
+      
+      <div id="snapsize" class="info-text" style="margin-top: 16px;"></div>
+      
+      <div class="image-link" id="imagelink"></div>
     </div>
   </main>
 
@@ -645,11 +696,16 @@
     // Handle resize slider
     function handleResizeSlider(value) {
       document.getElementById('resizeValue').textContent = value;
-      // Adjust the canvas size based on slider value
+      
+      // Adjust the video and canvas size based on slider value
       if (typeof video !== 'undefined' && video.duration) {
         const width = Math.floor(720 * (value / 100));
         document.getElementById('videow').value = width;
         resize();
+        
+        // Also resize the video container proportionally
+        const height = Math.floor(width * 9 / 16);
+        document.querySelector('.video-container').style.height = `${height}px`;
       }
     }
 
@@ -672,6 +728,11 @@
           document.getElementById('videoInfo').style.display = 'block';
           document.getElementById('duration').textContent = formatTime(video.duration);
           updateSliderMax();
+          
+          // Set initial video container size
+          const width = document.getElementById('videow').value;
+          const height = Math.floor(width * 9 / 16);
+          document.querySelector('.video-container').style.height = `${height}px`;
         });
 
         video.addEventListener('timeupdate', function() {
@@ -697,6 +758,20 @@
       const mins = Math.floor(seconds / 60);
       const secs = Math.floor(seconds % 60);
       return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    // Resize function that affects both video and canvas
+    function resize() {
+      const width = parseInt(document.getElementById('videow').value);
+      const height = Math.floor(width * 9 / 16); // Maintain 16:9 aspect ratio
+      
+      // Resize video container
+      const videoContainer = document.querySelector('.video-container');
+      if (videoContainer) {
+        videoContainer.style.height = `${height}px`;
+      }
+      
+      // The canvas will be resized by the snapPicture function when called
     }
 
     // Make sure video controls are initialized when video loads
