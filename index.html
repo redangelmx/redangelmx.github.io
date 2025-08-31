@@ -37,13 +37,6 @@
       margin: 0;
     }
 
-    main {
-      display: flex;
-      min-height: calc(100vh - 72px);
-      padding: 24px;
-      gap: 24px;
-    }
-
     header {
       background: white;
       box-shadow: var(--shadow);
@@ -124,6 +117,16 @@
     .btn-outline:hover {
       border-color: var(--primary-light);
       color: var(--primary-color);
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
     .card {
@@ -263,21 +266,31 @@
     }
 
     .video-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 16px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 16px;
+      border-radius: 0 0 8px 8px;
+      transition: var(--transition);
+      opacity: 0;
+    }
+
+    .video-container:hover .video-controls {
+      opacity: 1;
     }
 
     .controls-row {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .control-btn {
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
       border-radius: 8px;
       width: 40px;
       height: 40px;
@@ -287,36 +300,36 @@
       cursor: pointer;
       transition: var(--transition);
       font-size: 1.1rem;
+      color: white;
     }
 
     .control-btn:hover {
       background: var(--primary-light);
-      border-color: var(--primary-light);
-      color: white;
     }
 
     .control-btn.active {
       background: var(--primary-color);
-      border-color: var(--primary-color);
       color: white;
     }
 
     .slider-container {
-      margin: 24px 0;
+      width: 100%;
+      padding: 0 8px;
+      margin: 8px 0;
     }
 
     .slider {
       width: 100%;
       height: 6px;
       border-radius: 3px;
-      background: var(--border-color);
+      background: rgba(255, 255, 255, 0.4);
       overflow: hidden;
     }
 
     .slider-track {
       height: 100%;
       width: 0;
-      background: var(--primary-color);
+      background: white;
       border-radius: 3px;
     }
 
@@ -325,9 +338,9 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: var(--primary-color);
+      background: white;
       cursor: pointer;
-      border: 2px solid white;
+      border: 2px solid var(--primary-color);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
@@ -335,9 +348,9 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: var(--primary-color);
+      background: white;
       cursor: pointer;
-      border: 2px solid white;
+      border: 2px solid var(--primary-color);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
@@ -366,22 +379,10 @@
       margin-bottom: 6px;
     }
 
-    .action-buttons {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .video-data {
-      flex: 1;
-      min-width: 300px;
-    }
-
-    .video-output {
-      flex: 1;
-      min-width: 300px;
-      display: flex;
-      flex-direction: column;
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
     }
 
     .dimensions {
@@ -401,6 +402,12 @@
       margin-top: 4px;
     }
 
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
     .image-link {
       margin-top: 16px;
       word-break: break-all;
@@ -413,18 +420,8 @@
     }
 
     @media (max-width: 1024px) {
-      main {
-        flex-direction: column;
-      }
-      
-      .header-container {
-        flex-direction: column;
-        gap: 16px;
-        align-items: stretch;
-      }
-      
-      .actions {
-        justify-content: center;
+      .content-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -485,45 +482,48 @@
   </header>
 
   <main>
-    <div class="video-data">
-      <div class="card">
-        <h2 class="section-title">Source</h2>
-        
-        <div class="radio-group">
-          <div class="radio-option">
-            <input type="radio" id="video_file" name="video_source" checked onclick="showInput('select-file')">
-            <label for="video_file">From File</label>
-          </div>
-          <div class="radio-option">
-            <input type="radio" id="video_url" name="video_source" onclick="showInput('select-url')">
-            <label for="video_url">From URL</label>
-          </div>
+    <!-- Source Panel (on top) -->
+    <div class="card">
+      <h2 class="section-title">Source</h2>
+      
+      <div class="radio-group">
+        <div class="radio-option">
+          <input type="radio" id="video_file" name="video_source" checked onclick="showInput('select-file')">
+          <label for="video_file">From File</label>
         </div>
-        
-        <div id="select-file">
-          <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()">
-        </div>
-        
-        <div id="select-url" style="display:none">
-          <div class="input-group">
-            <label for="videourl">Video URL</label>
-            <input type="text" id="videourl" placeholder="https://" onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
-          </div>
-          <button class="btn btn-primary" onclick="loadVideoURL(document.getElementById('videourl').value)">
-            Load Video
-          </button>
-        </div>
-        
-        <div class="instructions">
-          <p>For YouTube or Vimeo videos:</p>
-          <ul>
-            <li>Use a service to convert to MP4 format</li>
-            <li>Use the direct download link here, or</li>
-            <li>Download the file and use "From File" option</li>
-          </ul>
+        <div class="radio-option">
+          <input type="radio" id="video_url" name="video_source" onclick="showInput('select-url')">
+          <label for="video_url">From URL</label>
         </div>
       </div>
+      
+      <div id="select-file">
+        <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()">
+      </div>
+      
+      <div id="select-url" style="display:none">
+        <div class="input-group">
+          <label for="videourl">Video URL</label>
+          <input type="text" id="videourl" placeholder="https://" onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
+        </div>
+        <button class="btn btn-primary" onclick="loadVideoURL(document.getElementById('videourl').value)">
+          Load Video
+        </button>
+      </div>
+      
+      <div class="instructions">
+        <p>For YouTube or Vimeo videos:</p>
+        <ul>
+          <li>Use a service to convert to MP4 format</li>
+          <li>Use the direct download link here, or</li>
+          <li>Download the file and use "From File" option</li>
+        </ul>
+      </div>
+    </div>
 
+    <!-- Video Preview and Thumbnail side by side -->
+    <div class="content-grid">
+      <!-- Video Preview -->
       <div class="card">
         <h2 class="section-title">Video Preview</h2>
         
@@ -532,90 +532,57 @@
             <source src="blank.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
+          
+          <div class="video-controls" id="videoControls" style="display:none">
+            <div class="slider-container">
+              <input type="range" id="slider" class="slider" 
+                     oninput="goToTime(video,this.value)" 
+                     onmouseover="this.title=Math.floor(this.value)+'s'">
+              <div class="slider-track" id="slider-track"></div>
+            </div>
+            
+            <div class="controls-row">
+              <button class="control-btn" onclick="goToTime(video,0)" title="Go to start">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  <line x1="19" y1="12" x2="23" y2="12"></line>
+                </svg>
+              </button>
+              <button class="control-btn" onclick="goToTime(video,video.currentTime-5)" title="Back 5 seconds">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="12 19 12 5 4 5"></polyline>
+                  <polyline points="20 19 20 5 12 5"></polyline>
+                </svg>
+                <span>5s</span>
+              </button>
+              <button class="control-btn" id="playPauseBtn" onclick="video.paused?video.play():video.pause()" title="Play/Pause">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="playPauseIcon">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </button>
+              <button class="control-btn" onclick="goToTime(video,video.currentTime+5)" title="Forward 5 seconds">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                  <polyline points="15 18 21 12 15 6"></polyline>
+                </svg>
+                <span>5s</span>
+              </button>
+              <button class="control-btn" onclick="goToTime(video,video.duration)" title="Go to end">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="19 17 19 7 5 12 19 17"></polygon>
+                  <line x1="23" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
         
         <div id="videoInfo" class="info-text" style="display: none;">
           Duration: <span id="duration">00:00</span>
         </div>
-        
-        <div class="slider-container">
-          <div class="slider-wrapper">
-            <input type="range" id="slider" class="slider" 
-                   oninput="goToTime(video,this.value)" 
-                   onmouseover="this.title=Math.floor(this.value)+'s'">
-            <div class="slider-track" id="slider-track"></div>
-          </div>
-        </div>
-        
-        <div class="video-controls" id="videoControls" style="display:none">
-          <div class="controls-row">
-            <button class="control-btn" onclick="goToTime(video,0)" title="Go to start">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                <line x1="19" y1="12" x2="23" y2="12"></line>
-              </svg>
-            </button>
-            <button class="control-btn" onclick="goToTime(video,video.currentTime-60)" title="Back 1 minute">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="12 19 12 5 4 5"></polyline>
-                <polyline points="20 19 20 5 12 5"></polyline>
-                <line x1="4" y1="12" x2="8" y2="12"></line>
-                <line x1="12" y1="12" x2="16" y2="12"></line>
-              </svg>
-              <span>1m</span>
-            </button>
-            <button class="control-btn" onclick="goToTime(video,video.currentTime-5)" title="Back 5 seconds">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="12 19 12 5 4 5"></polyline>
-                <polyline points="20 19 20 5 12 5"></polyline>
-              </svg>
-              <span>5s</span>
-            </button>
-            <button class="control-btn" onclick="goToTime(video,video.currentTime-1)" title="Back 1 second">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="5 4 15 12 5 20 5 4"></polyline>
-              </svg>
-              <span>1s</span>
-            </button>
-            <button class="control-btn" id="playPauseBtn" onclick="video.paused?video.play():video.pause()" title="Play/Pause">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="playPauseIcon">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-            </button>
-            <button class="control-btn" onclick="goToTime(video,video.currentTime+1)" title="Forward 1 second">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-              <span>1s</span>
-            </button>
-            <button class="control-btn" onclick="goToTime(video,video.currentTime+5)" title="Forward 5 seconds">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-                <polyline points="15 18 21 12 15 6"></polyline>
-              </svg>
-              <span>5s</span>
-            </button>
-            <button class="control-btn" onclick="goToTime(video,video.currentTime+60)" title="Forward 1 minute">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-                <polyline points="15 18 21 12 15 6"></polyline>
-                <line x1="3" y1="12" x2="7" y2="12"></line>
-                <line x1="11" y1="12" x2="15" y2="12"></line>
-              </svg>
-              <span>1m</span>
-            </button>
-            <button class="control-btn" onclick="goToTime(video,video.duration)" title="Go to end">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="19 17 19 7 5 12 19 17"></polygon>
-                <line x1="23" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </button>
-          </div>
-        </div>
       </div>
-    </div>
 
-    <div class="video-output">
+      <!-- Thumbnail Output -->
       <div class="card">
         <h2 class="section-title">Thumbnail</h2>
         
@@ -696,7 +663,7 @@
       }
     }
 
-    // Initialize video event listeners when available
+    // Initialize video controls when video loads
     function initVideoControls() {
       const video = document.getElementById('video');
       if (video) {
