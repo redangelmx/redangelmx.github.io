@@ -90,53 +90,48 @@
   </header>
 
   <main>
-   <div class="card" id="sourceSettings" style="font-size:0.8rem; padding:8px;">
+  <div class="card" id="sourceSettings" style="font-size:0.8rem; padding:8px;">
   <h2 class="section-title" style="margin:0 0 6px; font-size:1rem;">Source & Settings</h2>
 
-  <!-- 1) source type -->
-  <div style="display:flex; gap:8px; margin-bottom:6px; align-items:center;">
-    <label style="display:flex; align-items:center; gap:3px;">
-      <input type="radio" id="video_file" name="video_source" checked onchange="showInput('select-file')"> File
-    </label>
-    <label style="display:flex; align-items:center; gap:3px;">
-      <input type="radio" id="video_url" name="video_source" onchange="showInput('select-url')"> URL
-    </label>
-  </div>
+  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
 
-  <!-- 2) file input -->
-  <div id="select-file" style="margin-bottom:4px;">
-    <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()" 
-      style="font-size:0.8rem; padding:4px;">
-  </div>
-
-  <!-- 3) url input -->
-  <div id="select-url" style="display:none; margin-bottom:4px;">
-    <div style="display:flex; gap:6px;">
+    <!-- 1) source type -->
+    <div style="display:flex; align-items:center; gap:6px; white-space:nowrap;">
+      <label style="display:flex; align-items:center; gap:3px;">
+        <input type="radio" id="video_file" name="video_source" checked onchange="showInput('select-file')"> File
+      </label>
+      <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()" 
+        style="font-size:0.75rem; padding:3px;">
+      
+      <label style="display:flex; align-items:center; gap:3px; margin-left:8px;">
+        <input type="radio" id="video_url" name="video_source" onchange="showInput('select-url')"> URL
+      </label>
       <input type="text" id="videourl" placeholder="https://" 
-        style="flex:1; padding:4px; font-size:0.8rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);" 
+        style="width:140px; padding:3px; font-size:0.75rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);" 
         onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
-      <button class="btn btn-primary" style="font-size:0.8rem; padding:3px 8px;"
+      <button class="btn btn-primary" style="font-size:0.75rem; padding:2px 6px;"
         onclick="loadVideoURL(document.getElementById('videourl').value)">Load</button>
     </div>
-  </div>
 
-  <!-- 4) output + resize inline -->
-  <div class="dimensions" style="display:flex; gap:8px; margin-top:4px;">
-    <div style="flex:1;">
-      <label for="outputWidth" style="display:block; margin-bottom:2px;">Width</label>
+    <!-- 2) width -->
+    <div style="display:flex; align-items:center; gap:4px; white-space:nowrap;">
+      <label for="outputWidth">W:</label>
       <input type="number" id="outputWidth" value="720" min="100" onchange="updateOutputSize()" 
-        style="width:100%; padding:4px; font-size:0.8rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);">
-      <div class="size-label" style="text-align:right; font-size:0.7rem;">px</div>
+        style="width:60px; padding:3px; font-size:0.75rem; background:#374151; border:1px solid var(--border-color); color:var(--text-color);">
+      <span style="font-size:0.7rem;">px</span>
     </div>
 
-    <div style="flex:1;">
-      <label for="resizeSlider" style="display:block; margin-bottom:2px;">Display</label>
+    <!-- 3) slider -->
+    <div style="display:flex; align-items:center; gap:4px; flex:1;">
+      <label for="resizeSlider">Display:</label>
       <input type="range" id="resizeSlider" min="10" max="100" value="80" 
-        oninput="updateDisplaySize(this.value)" class="slider" style="width:100%;">
-      <div class="size-label" style="text-align:right; font-size:0.7rem;"><span id="resizeValue">80</span>%</div>
+        oninput="updateDisplaySize(this.value)" class="slider" style="flex:1;">
+      <span id="resizeValue" style="font-size:0.75rem;">80%</span>
     </div>
+
   </div>
 </div>
+
 
 
     <!-- VIDEO + THUMBNAIL -->
@@ -145,7 +140,7 @@
         <h2 class="section-title">Video Preview</h2>
         <div class="preview-center">
           <div class="video-container" id="videoContainer" style="width:480px; height:270px;">
-            <video id="video" controls></video>
+            <video id="video"></video>
           </div>
 
           <div class="controls-row" id="videoControls" style="display:none">
@@ -153,29 +148,34 @@
 
 
 
-  <button class="control-btn" title="Back 30s" onclick="stepTime(-30)">
-    <i class="fa-solid fa-backward"></i> 30s
-  </button>
-  <button class="control-btn" title="Back 5s" onclick="stepTime(-5)">
-    <i class="fa-solid fa-backward-step"></i> 5s
-  </button>
-  <button class="control-btn" title="Back 1s" onclick="stepTime(-1)">
-    <i class="fa-solid fa-caret-left"></i> 1s
-  </button>
+<button class="control-btn" title="Back 30s" onclick="stepTime(-30)">
+  <i class="fa-solid fa-backward"></i>
+</button>
 
-  <button class="control-btn" id="playPauseBtn" title="Play/Pause" onclick="togglePlayPause()">
-    <i class="fa-solid fa-play"></i>
-  </button>
+<button class="control-btn" title="Back 5s" onclick="stepTime(-5)">
+  <i class="fa-solid fa-backward-step"></i>
+</button>
 
-  <button class="control-btn" title="Forward 1s" onclick="stepTime(1)">
-    1s <i class="fa-solid fa-caret-right"></i>
-  </button>
-  <button class="control-btn" title="Forward 5s" onclick="stepTime(5)">
-    5s <i class="fa-solid fa-forward-step"></i>
-  </button>
-  <button class="control-btn" title="Forward 30s" onclick="stepTime(30)">
-    30s <i class="fa-solid fa-forward"></i>
-  </button>
+<button class="control-btn" title="Back 1s" onclick="stepTime(-1)">
+  <i class="fa-solid fa-caret-left"></i>
+</button>
+
+<button class="control-btn" id="playPauseBtn" title="Play/Pause" onclick="togglePlayPause()">
+  <i class="fa-solid fa-play"></i>
+</button>
+
+<button class="control-btn" title="Forward 1s" onclick="stepTime(1)">
+  <i class="fa-solid fa-caret-right"></i>
+</button>
+
+<button class="control-btn" title="Forward 5s" onclick="stepTime(5)">
+  <i class="fa-solid fa-forward-step"></i>
+</button>
+
+<button class="control-btn" title="Forward 30s" onclick="stepTime(30)">
+  <i class="fa-solid fa-forward"></i>
+</button>
+
 
 
             <input type="range" id="slider" class="slider" style="width:100%; max-width:420px;" oninput="seekTo(this.value)" onmouseover="this.title=Math.floor(this.value)+'s'">
