@@ -12,16 +12,15 @@
       --primary-color: #6366f1;
       --primary-hover: #4f46e5;
       --primary-light: #818cf8;
-      --secondary-color: #ec4899;
-      --text-color: #e2e8f0;
-      --text-light: #cbd5e1;
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --border-color: #334155;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+      --primary-glow: rgba(99, 102, 241, 0.5);
+      --text-color: #e5e7eb;
+      --text-light: #9ca3af;
+      --bg-color: #111827;
+      --card-bg: #1f2937;
+      --border-color: #374151;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
       --radius: 12px;
       --transition: all 0.3s ease;
-      --glow: 0 0 20px rgba(99, 102, 241, 0.4);
     }
 
     * {
@@ -40,8 +39,8 @@
     }
 
     header {
-      background: linear-gradient(90deg, #1e293b, #334155);
-      box-shadow: var(--glow);
+      background: #1a2435;
+      box-shadow: var(--shadow);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -61,17 +60,16 @@
     .logo {
       font-size: 1.5rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--primary-light), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--primary-color);
       display: flex;
       align-items: center;
       gap: 8px;
-      text-shadow: var(--glow);
+      text-shadow: 0 0 10px var(--primary-glow);
     }
 
     .logo-icon {
       font-size: 1.8rem;
+      filter: drop-shadow(0 0 5px var(--primary-glow));
     }
 
     .actions {
@@ -94,27 +92,24 @@
     }
 
     .btn-text {
-      background: rgba(255, 255, 255, 0.1);
+      background: transparent;
       color: var(--text-color);
-      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .btn-text:hover {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: var(--glow);
-      border-color: var(--primary-light);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .btn-primary {
       background: var(--primary-color);
       color: white;
-      box-shadow: var(--glow);
+      box-shadow: 0 0 5px var(--primary-glow);
     }
 
     .btn-primary:hover {
       background: var(--primary-hover);
       transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4), 0 0 15px var(--primary-glow);
     }
 
     .btn-outline {
@@ -125,8 +120,8 @@
 
     .btn-outline:hover {
       border-color: var(--primary-light);
-      color: var(--primary-light);
-      box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+      color: var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-glow);
     }
 
     main {
@@ -146,12 +141,10 @@
       padding: 24px;
       border: 1px solid var(--border-color);
       transition: var(--transition);
-      backdrop-filter: blur(4px);
     }
 
     .card:hover {
-      box-shadow: 0 10px 25px -3px rgba(99, 102, 241, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-      border-color: var(--primary-light);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
     }
 
     .section-title {
@@ -159,10 +152,6 @@
       font-weight: 600;
       margin-bottom: 16px;
       color: var(--text-color);
-      background: linear-gradient(90deg, var(--primary-light), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
     }
 
     .input-group {
@@ -186,7 +175,7 @@
       border: 1px solid var(--border-color);
       font-size: 1rem;
       transition: var(--transition);
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: #374151;
       color: var(--text-color);
     }
 
@@ -195,16 +184,14 @@
     input[type="file"]:focus {
       outline: none;
       border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
     }
 
     input[type="file"] {
       border: 2px dashed var(--border-color);
       border-radius: 8px;
       padding: 16px;
-      background: rgba(0, 0, 0, 0.2);
-      color: var(--text-light);
+      background: rgba(55, 65, 81, 0.5);
     }
 
     input[type="file"]:hover {
@@ -235,7 +222,7 @@
       align-items: center;
       justify-content: center;
       transition: var(--transition);
-      position: relative;
+      background: #374151;
     }
 
     .radio-option input::after {
@@ -248,9 +235,9 @@
     }
 
     .radio-option input:checked {
-      border-color: var(--primary-light);
+      border-color: var(--primary-color);
       background: var(--primary-color);
-      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 8px var(--primary-glow);
     }
 
     .radio-option input:checked::after {
@@ -263,36 +250,36 @@
       margin-bottom: 0;
     }
 
-    .video-container, canvas {
+    .video-container {
       position: relative;
       border-radius: 8px;
       overflow: hidden;
+      margin-bottom: 16px;
       background: #000;
       width: 100%;
-      aspect-ratio: 16 / 9;
     }
 
     video {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      height: auto;
       display: block;
     }
 
     canvas {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
+      height: auto;
+      max-height: 60vh;
+      border-radius: 8px;
+      background: #000;
+      margin-bottom: 16px;
     }
 
-    .video-controls {
-      margin-top: 16px;
+    .external-controls {
+      background: rgba(31, 41, 55, 0.8);
       padding: 16px;
-      background: rgba(30, 41, 59, 0.8);
       border-radius: 8px;
+      margin-top: 8px;
       border: 1px solid var(--border-color);
-      backdrop-filter: blur(4px);
     }
 
     .controls-row {
@@ -300,57 +287,57 @@
       gap: 8px;
       flex-wrap: wrap;
       justify-content: center;
+      margin-bottom: 8px;
     }
 
     .control-btn {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(55, 65, 81, 0.7);
       border: none;
       border-radius: 8px;
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: var(--transition);
       font-size: 1.1rem;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
     }
 
     .control-btn:hover {
-      background: var(--primary-light);
+      background: var(--primary-color);
       color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 0 8px var(--primary-glow);
     }
 
     .control-btn.active {
       background: var(--primary-color);
       color: white;
-      box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 10px var(--primary-glow);
     }
 
     .slider-container {
       width: 100%;
       padding: 0 8px;
-      margin: 12px 0;
+      margin: 8px 0;
     }
 
     .slider {
       width: 100%;
       height: 6px;
       border-radius: 3px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(55, 65, 81, 0.7);
       overflow: hidden;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .slider-track {
       height: 100%;
       width: 0;
-      background: var(--primary-light);
+      background: var(--primary-color);
       border-radius: 3px;
-      transition: width 0.1s;
     }
 
     .slider::-webkit-slider-thumb {
@@ -361,13 +348,7 @@
       background: white;
       cursor: pointer;
       border: 2px solid var(--primary-color);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      transition: transform 0.2s;
-    }
-
-    .slider::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+      box-shadow: 0 0 5px var(--primary-glow);
     }
 
     .slider::-moz-range-thumb {
@@ -377,13 +358,7 @@
       background: white;
       cursor: pointer;
       border: 2px solid var(--primary-color);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      transition: transform 0.2s;
-    }
-
-    .slider::-moz-range-thumb:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+      box-shadow: 0 0 5px var(--primary-glow);
     }
 
     .info-text {
@@ -394,13 +369,12 @@
     }
 
     .instructions {
-      background-color: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.3);
+      background-color: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 16px;
       margin: 16px 0;
       font-size: 0.95rem;
-      backdrop-filter: blur(4px);
     }
 
     .instructions ul {
@@ -446,23 +420,10 @@
       word-break: break-all;
       font-size: 0.9rem;
       padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(31, 41, 55, 0.5);
       border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: none;
-    }
-
-    .resize-controls {
-      margin: 16px 0;
-      padding: 16px;
-      background: rgba(30, 41, 59, 0.8);
-      border-radius: 8px;
       border: 1px solid var(--border-color);
-      backdrop-filter: blur(4px);
-    }
-
-    .resize-controls .input-group {
-      margin-bottom: 0;
+      display: none;
     }
 
     @media (max-width: 1024px) {
@@ -485,8 +446,8 @@
       }
       
       .control-btn {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         font-size: 1rem;
       }
       
@@ -580,11 +541,7 @@
           </video>
         </div>
         
-        <div id="videoInfo" class="info-text" style="display: none;">
-          Duration: <span id="duration">00:00</span>
-        </div>
-        
-        <div class="video-controls" id="videoControls" style="display:none">
+        <div class="external-controls" id="videoControls" style="display:none">
           <div class="slider-container">
             <input type="range" id="slider" class="slider" 
                    oninput="goToTime(video,this.value)" 
@@ -626,6 +583,10 @@
             </button>
           </div>
         </div>
+        
+        <div id="videoInfo" class="info-text" style="display: none;">
+          Duration: <span id="duration">00:00</span>
+        </div>
       </div>
 
       <!-- Thumbnail Output -->
@@ -633,52 +594,51 @@
         <h2 class="section-title">Thumbnail</h2>
         
         <canvas id="canvas" width="640" height="480"></canvas>
-      </div>
-    </div>
-    
-    <!-- Resize Controls -->
-    <div class="card resize-controls">
-      <h2 class="section-title">Resize Controls</h2>
-      
-      <div class="dimensions">
-        <div style="flex: 1;">
-          <label for="videow">Width</label>
-          <input type="number" id="videow" value="720" onchange="resize()" min="100">
-          <div class="size-label">pixels</div>
-        </div>
-        <div style="flex: 1;">
-          <label for="resizeSlider">Resize</label>
-          <input type="range" id="resizeSlider" min="10" max="100" value="70" oninput="handleResizeSlider(this.value)">
-          <div class="size-label"><span id="resizeValue">70</span>%</div>
-        </div>
-      </div>
-      
-      <div class="action-buttons">
-        <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-            <circle cx="12" cy="13" r="4"></circle>
-          </svg>
-          <span>Capture Frame</span>
-        </button>
         
-        <button id="save" class="btn btn-outline" onclick="savePicture()" disabled>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span>Save Image</span>
-        </button>
+        <div class="dimensions">
+          <div style="flex: 1;">
+            <label for="videow">Width</label>
+            <input type="number" id="videow" value="720" onchange="resizeBoth()" min="100">
+            <div class="size-label">pixels</div>
+          </div>
+          <div style="flex: 1;">
+            <label for="resizeSlider">Resize</label>
+            <input type="range" id="resizeSlider" min="10" max="100" value="70" oninput="handleResizeSlider(this.value)">
+            <div class="size-label"><span id="resizeValue">70</span>%</div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span>Capture Frame</span>
+          </button>
+          
+          <button id="save" class="btn btn-outline" onclick="savePicture()" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Save Image</span>
+          </button>
+        </div>
+        
+        <div id="snapsize" class="info-text" style="margin-top: 16px;"></div>
+        
+        <div class="image-link" id="imagelink"></div>
       </div>
-      
-      <div id="snapsize" class="info-text" style="margin-top: 16px;"></div>
-      
-      <div class="image-link" id="imagelink"></div>
     </div>
   </main>
 
   <script>
+    // Variables to track the original video dimensions
+    let originalVideoWidth = 0;
+    let originalVideoHeight = 0;
+    
     function showInput(id) {
       document.getElementById('select-file').style.display = 'none';
       document.getElementById('select-url').style.display = 'none';
@@ -696,16 +656,11 @@
     // Handle resize slider
     function handleResizeSlider(value) {
       document.getElementById('resizeValue').textContent = value;
-      
-      // Adjust the video and canvas size based on slider value
+      // Adjust the canvas and video size based on slider value
       if (typeof video !== 'undefined' && video.duration) {
-        const width = Math.floor(720 * (value / 100));
+        const width = Math.floor(originalVideoWidth * (value / 100));
         document.getElementById('videow').value = width;
-        resize();
-        
-        // Also resize the video container proportionally
-        const height = Math.floor(width * 9 / 16);
-        document.querySelector('.video-container').style.height = `${height}px`;
+        resizeBoth();
       }
     }
 
@@ -729,10 +684,15 @@
           document.getElementById('duration').textContent = formatTime(video.duration);
           updateSliderMax();
           
-          // Set initial video container size
-          const width = document.getElementById('videow').value;
-          const height = Math.floor(width * 9 / 16);
-          document.querySelector('.video-container').style.height = `${height}px`;
+          // Store original video dimensions
+          originalVideoWidth = video.videoWidth;
+          originalVideoHeight = video.videoHeight;
+          
+          // Set initial width based on resize slider
+          const resizeValue = document.getElementById('resizeSlider').value;
+          const width = Math.floor(originalVideoWidth * (resizeValue / 100));
+          document.getElementById('videow').value = width;
+          resizeBoth();
         });
 
         video.addEventListener('timeupdate', function() {
@@ -759,19 +719,34 @@
       const secs = Math.floor(seconds % 60);
       return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
-    
-    // Resize function that affects both video and canvas
-    function resize() {
+
+    // Resize both video and canvas
+    function resizeBoth() {
       const width = parseInt(document.getElementById('videow').value);
-      const height = Math.floor(width * 9 / 16); // Maintain 16:9 aspect ratio
       
-      // Resize video container
+      // Calculate height based on original aspect ratio
+      const height = Math.floor((originalVideoHeight / originalVideoWidth) * width);
+      
+      // Update canvas size
+      const canvas = document.getElementById('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      
+      // Update video display size (not the actual video element to avoid distortion)
       const videoContainer = document.querySelector('.video-container');
-      if (videoContainer) {
-        videoContainer.style.height = `${height}px`;
-      }
+      videoContainer.style.width = width + 'px';
+      videoContainer.style.maxWidth = '100%';
       
-      // The canvas will be resized by the snapPicture function when called
+      // Update resize slider to match the current percentage
+      const percentage = Math.floor((width / originalVideoWidth) * 100);
+      document.getElementById('resizeSlider').value = percentage;
+      document.getElementById('resizeValue').textContent = percentage;
+      
+      // If we have a captured image, redraw it at the new size
+      if (window.lastImageData) {
+        const ctx = canvas.getContext('2d');
+        ctx.putImageData(window.lastImageData, 0, 0);
+      }
     }
 
     // Make sure video controls are initialized when video loads
@@ -786,11 +761,69 @@
 
     // Add event listener to slider
     document.getElementById('slider').addEventListener('input', updateSliderTrack);
-  </script>
 
-  <!-- Your existing app.js and slider.js -->
-  <script src="app.js"></script>
-  <script src="js/slider.js"></script>
+    // Functions from app.js and slider.js would be included here
+    // For demonstration, I'll add placeholder implementations
+    
+    function goToTime(video, time) {
+      video.currentTime = time;
+    }
+    
+    function loadVideoFile() {
+      const fileInput = document.getElementById('videofile');
+      const file = fileInput.files[0];
+      if (file) {
+        const video = document.getElementById('video');
+        const videoURL = URL.createObjectURL(file);
+        video.src = videoURL;
+        video.load();
+        
+        // Enable capture button
+        document.getElementById('snap').disabled = false;
+      }
+    }
+    
+    function loadVideoURL(url) {
+      if (url) {
+        const video = document.getElementById('video');
+        video.src = url;
+        video.load();
+        
+        // Enable capture button
+        document.getElementById('snap').disabled = false;
+      }
+    }
+    
+    function snapPicture() {
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Draw the current video frame to canvas
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      // Store the image data for resizing
+      window.lastImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      
+      // Enable save button
+      document.getElementById('save').disabled = false;
+      
+      // Update size info
+      document.getElementById('snapsize').textContent = 
+        `Size: ${canvas.width} × ${canvas.height} pixels`;
+    }
+    
+    function savePicture() {
+      const canvas = document.getElementById('canvas');
+      const image = canvas.toDataURL('image/png');
+      
+      // Create a temporary link for download
+      const link = document.createElement('a');
+      link.download = 'thumbnail.png';
+      link.href = image;
+      link.click();
+    }
+  </script>
 </body>
 
 </html>
