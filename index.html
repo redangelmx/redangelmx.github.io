@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -258,11 +259,9 @@
       position: relative;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 16px;
+      margin: 0 auto 16px;
       background: #000;
       box-shadow: var(--neon-shadow);
-      width: 720px;
-      height: 405px;
       max-width: 100%;
       max-height: 60vh;
     }
@@ -275,13 +274,11 @@
     }
 
     canvas {
-      height: auto;
       border-radius: 8px;
       background: #000;
-      margin-bottom: 16px;
+      margin: 0 auto 16px;
       box-shadow: var(--neon-shadow);
-      width: 720px;
-      height: 405px;
+      display: block;
       max-width: 100%;
       max-height: 60vh;
     }
@@ -460,10 +457,6 @@
         padding: 6px 12px;
         font-size: 0.9rem;
       }
-
-      .video-container, canvas {
-        height: 200px;
-      }
     }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -538,9 +531,14 @@
 
       <div class="dimensions">
         <div style="flex: 1;">
-          <label for="videow">Output Width (for save)</label>
-          <input type="number" id="videow" value="720" onchange="resizeBoth()" min="100">
+          <label for="outputWidth">Output Width (save)</label>
+          <input type="number" id="outputWidth" value="720" onchange="updateOutputSize()" min="100">
           <div class="size-label">pixels</div>
+        </div>
+        <div style="flex: 1;">
+          <label for="resizeSlider">Display Size</label>
+          <input type="range" id="resizeSlider" min="10" max="100" value="100" oninput="updateDisplaySize(this.value)">
+          <div class="size-label"><span id="resizeValue">100</span>%</div>
         </div>
       </div>
     </div>
@@ -606,7 +604,7 @@
       <div class="card">
         <h2 class="section-title">Thumbnail</h2>
         
-        <canvas id="canvas" width="720" height="405"></canvas>
+        <canvas id="canvas"></canvas>
         
         <div class="action-buttons">
           <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>
@@ -639,6 +637,9 @@
     let originalVideoWidth = 0;
     let originalVideoHeight = 0;
     let lastFullImage = null;
+    let outputWidth = 720;
+    let displayScale = 1.0;
+    let aspectRatio = 9 / 16;
     
     function showInput(id) {
       document.getElementById('select-file').style.display = 'none';
@@ -676,8 +677,9 @@
           // Store original video dimensions
           originalVideoWidth = video.videoWidth;
           originalVideoHeight = video.videoHeight;
+          aspectRatio = originalVideoHeight / originalVideoWidth;
           
-          // No need to resize on load, size is fixed
+          updateOutputSize();
         });
 
         video.addEventListener('timeupdate', function() {
@@ -705,58 +707,43 @@
       return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
 
-    function drawCentered(ctx, source, canvasWidth, canvasHeight) {
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    function updateOutputSize() {
+      outputWidth = parseInt(document.getElementById('outputWidth').value) || 720;
+      const outputHeight = Math.floor(outputWidth * aspectRatio);
 
-      const sourceWidth = source.videoWidth || source.width;
-      const sourceHeight = source.videoHeight || source.height;
-      const aspect = sourceHeight / sourceWidth;
-      const canvasAspect = canvasHeight / canvasWidth;
-
-      let drawWidth, drawHeight, drawX, drawY;
-      if (aspect > canvasAspect) {
-        drawHeight = canvasHeight;
-        drawWidth = drawHeight / aspect;
-        drawX = (canvasWidth - drawWidth) / 2;
-        drawY = 0;
-      } else {
-        drawWidth = canvasWidth;
-        drawHeight = drawWidth * aspect;
-        drawX = 0;
-        drawY = (canvasHeight - drawHeight) / 2;
-      }
-      ctx.drawImage(source, drawX, drawY, drawWidth, drawHeight);
-    }
-
-    // Resize both video and canvas
-    function resizeBoth() {
-      const outputWidth = parseInt(document.getElementById('videow').value) || 720;
-      const fixedRatio = 9 / 16;
-      const outputHeight = Math.floor(outputWidth * fixedRatio);
-      
       const canvas = document.getElementById('canvas');
       canvas.width = outputWidth;
       canvas.height = outputHeight;
-      canvas.style.width = `${outputWidth}px`;
-      canvas.style.height = `${outputHeight}px`;
-      
-      const videoContainer = document.querySelector('.video-container');
-      videoContainer.style.width = `${outputWidth}px`;
-      videoContainer.style.height = `${outputHeight}px`;
-      
-      const ctx = canvas.getContext('2d');
-      
-      // If we have a captured image, redraw it at the new size
+
       if (lastFullImage) {
+        const ctx = canvas.getContext('2d');
         const img = new Image();
         img.onload = function() {
-          drawCentered(ctx, img, canvas.width, canvas.height);
-          document.getElementById('snapsize').textContent = 
-            `Size: ${canvas.width} × ${canvas.height} pixels`;
+          ctx.drawImage(img, 0, 0, outputWidth, outputHeight);
+          document.getElementById('snapsize').textContent = `Size: ${outputWidth} × ${outputHeight} pixels`;
         };
         img.src = lastFullImage;
       }
+
+      updateDisplaySize();
+    }
+
+    function updateDisplaySize(value) {
+      if (value) {
+        displayScale = value / 100;
+        document.getElementById('resizeValue').textContent = value;
+      }
+
+      const dispW = Math.floor(outputWidth * displayScale);
+      const dispH = Math.floor(canvas.height * displayScale);
+
+      const videoContainer = document.querySelector('.video-container');
+      videoContainer.style.width = `${dispW}px`;
+      videoContainer.style.height = `${dispH}px`;
+
+      const canvas = document.getElementById('canvas');
+      canvas.style.width = `${dispW}px`;
+      canvas.style.height = `${dispH}px`;
     }
 
     // Make sure video controls are initialized when video loads
@@ -765,6 +752,7 @@
     // Initial slider value update
     document.addEventListener('DOMContentLoaded', function() {
       updateSliderTrack();
+      updateDisplaySize(100);
     });
 
     // Add event listener to slider
@@ -807,7 +795,7 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       
-      drawCentered(ctx, video, canvas.width, canvas.height);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       
       // Store the full resolution frame
       const tempCanvas = document.createElement('canvas');
@@ -839,3 +827,4 @@
 </body>
 
 </html>
+```
