@@ -260,15 +260,18 @@
       overflow: hidden;
       margin-bottom: 16px;
       background: #000;
+      box-shadow: var(--neon-shadow);
+      width: 720px;
+      height: 405px;
       max-width: 100%;
       max-height: 60vh;
-      box-shadow: var(--neon-shadow);
     }
 
     video {
       width: 100%;
       height: 100%;
       display: block;
+      object-fit: contain;
     }
 
     canvas {
@@ -276,9 +279,11 @@
       border-radius: 8px;
       background: #000;
       margin-bottom: 16px;
+      box-shadow: var(--neon-shadow);
+      width: 720px;
+      height: 405px;
       max-width: 100%;
       max-height: 60vh;
-      box-shadow: var(--neon-shadow);
     }
 
     .external-controls {
@@ -455,6 +460,10 @@
         padding: 6px 12px;
         font-size: 0.9rem;
       }
+
+      .video-container, canvas {
+        height: 200px;
+      }
     }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -517,6 +526,15 @@
           Load Video
         </button>
       </div>
+      
+      <div class="instructions">
+        <p>For YouTube or Vimeo videos:</p>
+        <ul>
+          <li>Use a service to convert to MP4 format</li>
+          <li>Use the direct download link here, or</li>
+          <li>Download the file and use "From File" option</li>
+        </ul>
+      </div>
 
       <div class="dimensions">
         <div style="flex: 1;">
@@ -535,7 +553,6 @@
         
         <div class="video-container">
           <video id="video" controls>
-            <source src="blank.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
         </div>
@@ -589,7 +606,7 @@
       <div class="card">
         <h2 class="section-title">Thumbnail</h2>
         
-        <canvas id="canvas" width="640" height="480"></canvas>
+        <canvas id="canvas" width="720" height="405"></canvas>
         
         <div class="action-buttons">
           <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>
@@ -660,8 +677,7 @@
           originalVideoWidth = video.videoWidth;
           originalVideoHeight = video.videoHeight;
           
-          // Resize to current settings without changing preview size
-          resizeBoth();
+          // No need to resize on load, size is fixed
         });
 
         video.addEventListener('timeupdate', function() {
@@ -689,36 +705,55 @@
       return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
 
+    function drawCentered(ctx, source, canvasWidth, canvasHeight) {
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+      const sourceWidth = source.videoWidth || source.width;
+      const sourceHeight = source.videoHeight || source.height;
+      const aspect = sourceHeight / sourceWidth;
+      const canvasAspect = canvasHeight / canvasWidth;
+
+      let drawWidth, drawHeight, drawX, drawY;
+      if (aspect > canvasAspect) {
+        drawHeight = canvasHeight;
+        drawWidth = drawHeight / aspect;
+        drawX = (canvasWidth - drawWidth) / 2;
+        drawY = 0;
+      } else {
+        drawWidth = canvasWidth;
+        drawHeight = drawWidth * aspect;
+        drawX = 0;
+        drawY = (canvasHeight - drawHeight) / 2;
+      }
+      ctx.drawImage(source, drawX, drawY, drawWidth, drawHeight);
+    }
+
     // Resize both video and canvas
     function resizeBoth() {
-      if (originalVideoWidth === 0) return;
-
       const outputWidth = parseInt(document.getElementById('videow').value) || 720;
-      const aspect = originalVideoHeight / originalVideoWidth;
-      const outputHeight = Math.floor(outputWidth * aspect);
+      const fixedRatio = 9 / 16;
+      const outputHeight = Math.floor(outputWidth * fixedRatio);
       
       const canvas = document.getElementById('canvas');
       canvas.width = outputWidth;
       canvas.height = outputHeight;
-      
-      const displayWidth = outputWidth;
-      const displayHeight = outputHeight;
+      canvas.style.width = `${outputWidth}px`;
+      canvas.style.height = `${outputHeight}px`;
       
       const videoContainer = document.querySelector('.video-container');
-      videoContainer.style.width = `${displayWidth}px`;
-      videoContainer.style.height = `${displayHeight}px`;
-      videoContainer.style.maxWidth = '100%';
-      videoContainer.style.maxHeight = '60vh';
+      videoContainer.style.width = `${outputWidth}px`;
+      videoContainer.style.height = `${outputHeight}px`;
       
-      canvas.style.width = `${displayWidth}px`;
-      canvas.style.height = `${displayHeight}px`;
+      const ctx = canvas.getContext('2d');
       
       // If we have a captured image, redraw it at the new size
       if (lastFullImage) {
-        const ctx = canvas.getContext('2d');
         const img = new Image();
         img.onload = function() {
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          drawCentered(ctx, img, canvas.width, canvas.height);
+          document.getElementById('snapsize').textContent = 
+            `Size: ${canvas.width} × ${canvas.height} pixels`;
         };
         img.src = lastFullImage;
       }
@@ -772,10 +807,9 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       
-      // Draw the current video frame to canvas at output resolution
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      drawCentered(ctx, video, canvas.width, canvas.height);
       
-      // Capture full resolution image for resizing
+      // Store the full resolution frame
       const tempCanvas = document.createElement('canvas');
       tempCanvas.width = originalVideoWidth;
       tempCanvas.height = originalVideoHeight;
