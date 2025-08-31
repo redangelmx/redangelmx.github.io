@@ -25,214 +25,848 @@
       --transition: all 0.3s ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
+      padding: 0;
       margin: 0;
     }
 
-    header { background: #1a2435; box-shadow: var(--shadow), var(--neon-shadow); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
-    .header-container { display:flex; justify-content:space-between; align-items:center; padding:16px 24px; max-width:1400px; margin:0 auto; width:100%; }
-    .logo { font-size:1.2rem; font-weight:700; color:var(--primary-color); display:flex; align-items:center; gap:8px; }
-    .actions { display:flex; gap:12px; }
-    .btn { padding:8px 16px; border-radius:8px; font-weight:500; font-size:.95rem; cursor:pointer; transition:var(--transition); display:inline-flex; align-items:center; gap:6px; border:none; }
-    .btn-text { background:transparent; color:var(--text-color); }
-    .btn-primary { background:var(--primary-color); color:white; }
-    .btn-outline { background:transparent; border:1px solid var(--border-color); color:var(--text-color); }
+    header {
+      background: #1a2435;
+      box-shadow: var(--shadow), var(--neon-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-    /* main full width */
-    main { width:100%; margin:0 auto; padding:24px; display:flex; flex-direction:column; gap:24px; max-width:1400px; }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
 
-    .card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow), var(--neon-shadow); padding:24px; border:1px solid var(--border-color); transition:var(--transition); }
-    .section-title { font-size:1.15rem; font-weight:600; margin-bottom:12px; }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--neon-glow);
+    }
 
-    .video-container { position:relative; border-radius:8px; overflow:hidden; background:#000; box-shadow:var(--neon-shadow); max-width:100%; }
-    video { width:100%; height:100%; display:block; object-fit:contain; background:#000; }
-    canvas { border-radius:8px; background:#000; display:block; max-width:100%; }
+    .logo-icon {
+      font-size: 1.8rem;
+      filter: drop-shadow(0 0 5px var(--primary-glow)) drop-shadow(0 0 10px var(--neon-glow));
+    }
 
-    .content-grid { display:grid; grid-template-columns: 1fr 1fr; gap:24px; align-items:start; }
-    .content-grid.stacked { grid-template-columns: 1fr; }
+    .actions {
+      display: flex;
+      gap: 12px;
+    }
 
-    .preview-center { display:flex; flex-direction:column; align-items:center; }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      outline: none;
+    }
 
-    .dimensions { display:flex; gap:12px; margin-top:12px; }
-    .size-label { font-size:.85rem; color:var(--text-light); text-align:center; margin-top:4px; }
+    .btn-text {
+      background: transparent;
+      color: var(--text-color);
+    }
 
-    .slider { width:100%; height:6px; border-radius:3px; background:rgba(55,65,81,0.7); -webkit-appearance:none; }
-    .slider::-webkit-slider-thumb { appearance:none; width:16px; height:16px; border-radius:50%; background:white; border:2px solid var(--primary-color); }
+    .btn-text:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
 
-    .controls-row { display:flex; gap:8px; justify-content:center; margin-top:8px; }
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+      box-shadow: 0 0 5px var(--primary-glow), var(--neon-shadow);
+    }
 
-    .action-buttons { display:flex; gap:12px; margin-top:12px; }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4), 0 0 15px var(--primary-glow), var(--neon-shadow);
+    }
 
-    @media (max-width: 1024px) { .content-grid { grid-template-columns: 1fr; } }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary-light);
+      color: var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-glow), var(--neon-shadow);
+    }
+
+    /* MAIN now spans the full width */
+    main {
+      max-width: none;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), var(--neon-shadow);
+      padding: 24px;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4), var(--neon-shadow);
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-color);
+      text-shadow: 0 0 5px var(--neon-glow);
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: #374151;
+      color: var(--text-color);
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="file"]:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3), var(--neon-shadow);
+    }
+
+    input[type="file"] {
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(55, 65, 81, 0.5);
+    }
+
+    input[type="file"]:hover {
+      border-color: var(--primary-light);
+      background: rgba(99, 102, 241, 0.1);
+      box-shadow: var(--neon-shadow);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .radio-option input {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      background: #374151;
+    }
+
+    .radio-option input::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: transparent;
+      transition: var(--transition);
+    }
+
+    .radio-option input:checked {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      box-shadow: 0 0 8px var(--primary-glow), var(--neon-shadow);
+    }
+
+    .radio-option input:checked::after {
+      background: white;
+    }
+
+    .radio-option label {
+      cursor: pointer;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+
+    /* preview container styling */
+    .video-container {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 0 auto 16px;
+      background: #000;
+      box-shadow: var(--neon-shadow);
+      max-width: 100%;
+      max-height: 60vh;
+      /* ensure the video-container doesn't stretch beyond its card width on small screens */
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      background: #000;
+    }
+
+    canvas {
+      border-radius: 8px;
+      background: #000;
+      margin: 0 auto 16px;
+      box-shadow: var(--neon-shadow);
+      display: block;
+      max-width: 100%;
+      max-height: 60vh;
+    }
+
+    .external-controls {
+      background: rgba(31, 41, 55, 0.8);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--neon-shadow);
+      width: 100%;
+    }
+
+    .controls-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .control-btn {
+      background: rgba(55, 65, 81, 0.7);
+      border: none;
+      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 1.1rem;
+      color: var(--text-color);
+    }
+
+    .control-btn:hover {
+      background: var(--primary-color);
+      color: white;
+      box-shadow: 0 0 8px var(--primary-glow), var(--neon-shadow);
+    }
+
+    .control-btn.active {
+      background: var(--primary-color);
+      color: white;
+      box-shadow: 0 0 10px var(--primary-glow), var(--neon-shadow);
+    }
+
+    .slider-container {
+      width: 100%;
+      padding: 0 8px;
+      margin: 8px 0;
+    }
+
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(55, 65, 81, 0.7);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: 2px solid var(--primary-color);
+      box-shadow: 0 0 5px var(--primary-glow), var(--neon-shadow);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: 2px solid var(--primary-color);
+      box-shadow: 0 0 5px var(--primary-glow), var(--neon-shadow);
+    }
+
+    .info-text {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    .instructions {
+      background-color: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+
+    .instructions ul {
+      margin: 8px 0 0 20px;
+      padding-left: 4px;
+    }
+
+    .instructions li {
+      margin-bottom: 6px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* make sure the preview elements are centered horizontally in their cards */
+    .card .preview-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .dimensions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .dimensions input {
+      text-align: center;
+    }
+
+    .size-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .image-link {
+      margin-top: 16px;
+      word-break: break-all;
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      background: rgba(31, 41, 55, 0.5);
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      display: none;
+    }
+
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0;
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .control-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+      }
+    }
   </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RKLKKLZFDQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-RKLKKLZFDQ');
+  </script>
 </head>
 
 <body>
   <header>
     <div class="header-container">
-      <div class="logo"><span class="logo-icon">🎥</span><span>Video Thumbnail Generator</span></div>
+      <div class="logo">
+        <span class="logo-icon">🎥</span>
+        <span>Video Thumbnail Generator</span>
+      </div>
       <div class="actions">
-        <button class="btn btn-text" onclick="document.getElementById('videofile').click()">Upload Video</button>
-        <a class="btn btn-outline" href="https://github.com/fraigo/online-video-thumbnail-generator" target="_blank">GitHub</a>
+        <button class="btn btn-text" onclick="document.getElementById('videofile').click()">
+          <span>Upload Video</span>
+        </button>
+        <a href="https://github.com/fraigo/online-video-thumbnail-generator" target="_blank" class="btn btn-outline">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+          </svg>
+          <span>GitHub</span>
+        </a>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- SOURCE and SETTINGS panel moved below -->
-    <div class="card" id="sourceSettings">
+    <!-- Merged Source and Size Settings Panel -->
+    <div class="card">
       <h2 class="section-title">Source and Settings</h2>
 
-      <div style="display:flex; gap:12px; margin-bottom:12px;">
-        <label style="display:flex; align-items:center; gap:8px;"><input type="radio" id="video_file" name="video_source" checked onchange="showInput('select-file')"> From File</label>
-        <label style="display:flex; align-items:center; gap:8px;"><input type="radio" id="video_url" name="video_source" onchange="showInput('select-url')"> From URL</label>
+      <div class="radio-group">
+        <div class="radio-option">
+          <input type="radio" id="video_file" name="video_source" checked onclick="showInput('select-file')">
+          <label for="video_file">From File</label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" id="video_url" name="video_source" onclick="showInput('select-url')">
+          <label for="video_url">From URL</label>
+        </div>
       </div>
 
       <div id="select-file">
         <input type="file" id="videofile" accept=".mp4,.webm,.ogg" onchange="loadVideoFile()">
       </div>
 
-      <div id="select-url" style="display:none; margin-top:8px;">
-        <input type="text" id="videourl" placeholder="https://" style="width:100%; padding:8px; background:#374151; border:1px solid var(--border-color); color:var(--text-color);" onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
-        <div style="margin-top:8px;"><button class="btn btn-primary" onclick="loadVideoURL(document.getElementById('videourl').value)">Load Video</button></div>
+      <div id="select-url" style="display:none">
+        <div class="input-group">
+          <label for="videourl">Video URL</label>
+          <input type="text" id="videourl" placeholder="https://" onkeypress="if(event.key==='Enter') loadVideoURL(this.value)">
+        </div>
+        <button class="btn btn-primary" onclick="loadVideoURL(document.getElementById('videourl').value)">
+          Load Video
+        </button>
       </div>
 
+
       <div class="dimensions">
-        <div style="flex:1">
+        <div style="flex: 1;">
           <label for="outputWidth">Output Width (save)</label>
-          <input type="number" id="outputWidth" value="720" min="100" onchange="updateOutputSize()" style="width:100%; padding:8px; background:#374151; border:1px solid var(--border-color); color:var(--text-color);">
+          <input type="number" id="outputWidth" value="720" onchange="updateOutputSize()" min="100">
           <div class="size-label">pixels</div>
         </div>
-
-        <div style="flex:1">
+        <div style="flex: 1;">
           <label for="resizeSlider">Display Size</label>
-          <input type="range" id="resizeSlider" min="10" max="300" value="100" oninput="updateDisplaySize(this.value)" class="slider">
+          <input type="range" id="resizeSlider" min="10" max="200" value="100" oninput="updateDisplaySize(this.value)">
           <div class="size-label"><span id="resizeValue">100</span>%</div>
         </div>
       </div>
     </div>
-    
-    <!-- VIDEO + THUMBNAIL first (order fixed as requested) -->
-    <div class="content-grid" id="contentGrid">
-      <div class="card" id="videoCard">
+
+    <!-- Video Preview and Thumbnail side by side -->
+    <div class="content-grid">
+      <!-- Video Preview -->
+      <div class="card">
         <h2 class="section-title">Video Preview</h2>
+
         <div class="preview-center">
-          <div class="video-container" id="videoContainer" style="width:480px; height:270px;">
-            <video id="video" controls></video>
+          <div class="video-container">
+            <video id="video" controls>
+              Your browser does not support the video tag.
+            </video>
           </div>
 
-          <div class="controls-row" id="videoControls" style="display:none">
-            <input type="range" id="slider" class="slider" oninput="goToTime(video,this.value)" onmouseover="this.title=Math.floor(this.value)+'s'">
+          <div class="external-controls" id="videoControls" style="display:none">
+            <div class="slider-container">
+              <input type="range" id="slider" class="slider" 
+                     oninput="goToTime(video,this.value)" 
+                     onmouseover="this.title=Math.floor(this.value)+'s'">
+            </div>
+
+            <div class="controls-row">
+              <button class="control-btn" onclick="goToTime(video,0)" title="Go to start">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                  <line x1="5" y1="19" x2="5" y2="5"></line>
+                </svg>
+              </button>
+              <button class="control-btn" onclick="goToTime(video,video.currentTime-5)" title="Back 5 seconds">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="11 19 2 12 11 5"></polyline>
+                  <polyline points="22 19 13 12 22 5"></polyline>
+                </svg>
+              </button>
+              <button class="control-btn" id="playPauseBtn" onclick="video.paused?video.play():video.pause()" title="Play/Pause">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="playPauseIcon">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </button>
+              <button class="control-btn" onclick="goToTime(video,video.currentTime+5)" title="Forward 5 seconds">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="13 5 22 12 13 19"></polyline>
+                  <polyline points="2 5 11 12 2 19"></polyline>
+                </svg>
+              </button>
+              <button class="control-btn" onclick="goToTime(video,video.duration)" title="Go to end">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                  <line x1="19" y1="5" x2="19" y2="19"></line>
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <div id="videoInfo" class="info-text" style="display:none; margin-top:8px;">Duration: <span id="duration">00:00</span></div>
+          <div id="videoInfo" class="info-text" style="display: none;">
+            Duration: <span id="duration">00:00</span>
+          </div>
         </div>
       </div>
 
-      <div class="card" id="thumbCard">
+      <!-- Thumbnail Output -->
+      <div class="card">
         <h2 class="section-title">Thumbnail</h2>
+
         <div class="preview-center">
-          <canvas id="canvas" style="width:480px; height:270px;"></canvas>
+          <canvas id="canvas"></canvas>
 
           <div class="action-buttons">
-            <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>Capture Frame</button>
-            <button id="save" class="btn btn-outline" onclick="savePicture()" disabled>Save Image</button>
+            <button id="snap" class="btn btn-primary" onclick="snapPicture()" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+              <span>Capture Frame</span>
+            </button>
+
+            <button id="save" class="btn btn-outline" onclick="savePicture()" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Save Image</span>
+            </button>
           </div>
 
-          <div id="snapsize" class="info-text" style="margin-top:12px;"></div>
-          <div class="image-link" id="imagelink" style="margin-top:8px;"></div>
+          <div id="snapsize" class="info-text" style="margin-top: 16px;"></div>
+
+          <div class="image-link" id="imagelink"></div>
         </div>
       </div>
     </div>
-
-
   </main>
 
   <script>
-    let originalVideoWidth = 0, originalVideoHeight = 0, lastFullImage = null;
-    let outputWidth = 720, displayScale = 1.0;
-    let aspectRatio = 9/16; // height/width
-    let currentVideoName = 'thumbnail';
+    // Variables to track the original video dimensions
+    let originalVideoWidth = 0;
+    let originalVideoHeight = 0;
+    let lastFullImage = null;
+    let outputWidth = 720;
+    let displayScale = 1.0;
+    // default aspect ratio (height / width)
+    let aspectRatio = 9 / 16;
 
-    function showInput(id){ document.getElementById('select-file').style.display='none'; document.getElementById('select-url').style.display='none'; document.getElementById(id).style.display='block'; }
-
-    function updateSliderTrack(){ const s = document.getElementById('slider'); if(!s || !s.max) return; const p = (s.value / s.max)*100; s.style.background = `linear-gradient(to right, var(--primary-color) ${p}%, rgba(55,65,81,0.7) ${p}%)`; }
-
-    function initVideoControls(){ const video = document.getElementById('video'); if(!video) return; video.addEventListener('loadedmetadata', ()=>{
-      document.getElementById('videoControls').style.display='flex'; document.getElementById('videoInfo').style.display='block'; document.getElementById('duration').textContent = formatTime(video.duration);
-      updateSliderMax();
-      originalVideoWidth = video.videoWidth || outputWidth; originalVideoHeight = video.videoHeight || Math.floor(outputWidth * aspectRatio);
-      aspectRatio = originalVideoHeight / (originalVideoWidth || outputWidth);
-      updateOutputSize();
-    });
-    video.addEventListener('timeupdate', ()=>{ const s=document.getElementById('slider'); if(s) s.value = video.currentTime; updateSliderTrack(); });
+    function showInput(id) {
+      document.getElementById('select-file').style.display = 'none';
+      document.getElementById('select-url').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
     }
 
-    function updateSliderMax(){ const video=document.getElementById('video'), s=document.getElementById('slider'); if(video && video.duration && s) s.max = video.duration; }
-    function formatTime(sec){ const m=Math.floor(sec/60), s=Math.floor(sec%60); return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
+    // Update slider track
+    function updateSliderTrack() {
+      const slider = document.getElementById('slider');
+      if (!slider) return;
+      const percent = (slider.value / slider.max) * 100;
+      slider.style.background = `linear-gradient(to right, var(--primary-color) ${percent}%, rgba(55, 65, 81, 0.7) ${percent}%)`;
+    }
 
-    function updateOutputSize(){ outputWidth = parseInt(document.getElementById('outputWidth').value)||720; const canvas = document.getElementById('canvas'); if(!canvas) return; const outputHeight = Math.floor(outputWidth * aspectRatio); canvas.width = outputWidth; canvas.height = outputHeight;
-      if(lastFullImage){ const ctx=canvas.getContext('2d'); const img=new Image(); img.onload = ()=>{ ctx.clearRect(0,0,outputWidth,outputHeight); ctx.drawImage(img,0,0,outputWidth,outputHeight); document.getElementById('snapsize').textContent = `Size: ${outputWidth} × ${outputHeight} pixels`; }; img.src = lastFullImage; }
-      else document.getElementById('snapsize').textContent = `Size: ${outputWidth} × ${outputHeight} pixels`;
-      // update displayed sizes
-      updateDisplaySize(); }
-
-    function updateDisplaySize(value){ if(value!==undefined && value!==null){ displayScale = (Number(value)||100)/100; document.getElementById('resizeValue').textContent = Math.round(displayScale*100); }
-      const canvas = document.getElementById('canvas'); if(!canvas) return; const grid = document.getElementById('contentGrid'); const videoContainer = document.getElementById('videoContainer');
-      const pixelH = canvas.height || Math.floor(outputWidth * aspectRatio);
-      const fullDispW = Math.floor(outputWidth * displayScale);
-      const fullDispH = Math.floor(pixelH * displayScale);
-
-      // compute available width per column (accounting for gap and some padding)
-      const gap = parseInt(getComputedStyle(grid).gap) || 24;
-      const gridWidth = grid.clientWidth || (document.documentElement.clientWidth - 48);
-      const availablePerColumn = Math.floor((gridWidth - gap) / 2);
-
-      if(fullDispW > availablePerColumn){
-        // stack cards into one column so big preview fits
-        grid.classList.add('stacked');
-        // use up to grid width minus some padding
-        const maxW = gridWidth - 48; // leave small margins
-        const useW = Math.min(fullDispW, maxW);
-        const useH = Math.floor(useW * (pixelH / canvas.width));
-        videoContainer.style.width = `${useW}px`;
-        videoContainer.style.height = `${useH}px`;
-        canvas.style.width = `${useW}px`;
-        canvas.style.height = `${useH}px`;
+    // Update play/pause button icon
+    function updatePlayPauseIcon() {
+      const icon = document.getElementById('playPauseIcon');
+      const videoEl = document.getElementById('video');
+      if (!icon || !videoEl) return;
+      if (videoEl.paused) {
+        icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
       } else {
-        // two column layout
-        grid.classList.remove('stacked');
-        videoContainer.style.width = `${fullDispW}px`;
-        videoContainer.style.height = `${fullDispH}px`;
-        canvas.style.width = `${fullDispW}px`;
-        canvas.style.height = `${fullDispH}px`;
+        icon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
       }
     }
 
-    // wire initialization
-    document.addEventListener('DOMContentLoaded', ()=>{ updateSliderTrack(); updateOutputSize(); updateDisplaySize(100); initVideoControls(); const s = document.getElementById('slider'); if(s) s.addEventListener('input', updateSliderTrack); const rs = document.getElementById('resizeSlider'); if(rs) rs.addEventListener('input', (e)=> updateDisplaySize(e.target.value)); window.addEventListener('resize', ()=> updateDisplaySize()); });
+    // Initialize video controls when video loads
+    function initVideoControls() {
+      const video = document.getElementById('video');
+      if (video) {
+        video.addEventListener('loadedmetadata', function() {
+          document.getElementById('videoControls').style.display = 'block';
+          document.getElementById('videoInfo').style.display = 'block';
+          document.getElementById('duration').textContent = formatTime(video.duration);
+          updateSliderMax();
 
-    function goToTime(videoEl, time){ const video = videoEl || document.getElementById('video'); if(!video || isNaN(time)) return; time = Math.max(0, Math.min(time, video.duration || time)); video.currentTime = time; }
+          // Store original video dimensions
+          originalVideoWidth = video.videoWidth || outputWidth;
+          originalVideoHeight = video.videoHeight || Math.floor(outputWidth * aspectRatio);
+          aspectRatio = originalVideoHeight / (originalVideoWidth || outputWidth);
 
-    // derive a friendly name for the video to use as thumbnail filename
-    function setCurrentVideoNameFromFile(file){ if(!file) return; const name = file.name || 'thumbnail'; currentVideoName = name.replace(/\.[^/.]+$/, ''); document.getElementById('imagelink').textContent = `Filename: ${currentVideoName}.png`; }
-    function setCurrentVideoNameFromURL(url){ try{ const u = new URL(url); let last = u.pathname.split('/').pop() || ''; last = last.split('?')[0].split('#')[0]; if(last){ currentVideoName = last.replace(/\.[^/.]+$/, ''); } else { currentVideoName = 'thumbnail'; } document.getElementById('imagelink').textContent = `Filename: ${currentVideoName}.png`; } catch(e){ currentVideoName = 'thumbnail'; document.getElementById('imagelink').textContent = '';} }
+          updateOutputSize();
+        });
 
-    function loadVideoFile(){ const fileInput = document.getElementById('videofile'); const file = fileInput.files[0]; if(!file) return; const video = document.getElementById('video'); const videoURL = URL.createObjectURL(file); video.src = videoURL; video.load(); document.getElementById('snap').disabled = false; setCurrentVideoNameFromFile(file); }
+        video.addEventListener('timeupdate', function() {
+          const slider = document.getElementById('slider');
+          if (slider) slider.value = video.currentTime;
+          updateSliderTrack();
+        });
 
-    function loadVideoURL(url){ if(!url) return; const video = document.getElementById('video'); video.src = url; video.load(); document.getElementById('snap').disabled = false; setCurrentVideoNameFromURL(url); }
+        video.addEventListener('play', updatePlayPauseIcon);
+        video.addEventListener('pause', updatePlayPauseIcon);
+        video.addEventListener('ended', updatePlayPauseIcon);
+      }
+    }
 
-    function snapPicture(){ const video = document.getElementById('video'); const canvas = document.getElementById('canvas'); if(!video || !canvas) return; const ctx = canvas.getContext('2d'); const drawW = canvas.width || outputWidth; const drawH = canvas.height || Math.floor(drawW * aspectRatio);
-      try{ ctx.drawImage(video, 0, 0, drawW, drawH); }catch(e){ console.warn('Could not draw video frame:', e); }
-      lastFullImage = canvas.toDataURL('image/png'); document.getElementById('save').disabled = false; document.getElementById('snapsize').textContent = `Size: ${canvas.width} × ${canvas.height} pixels`; }
+    function updateSliderMax() {
+      const video = document.getElementById('video');
+      const slider = document.getElementById('slider');
+      if (video && video.duration && slider) {
+        slider.max = video.duration;
+      }
+    }
 
-    function savePicture(){ const canvas = document.getElementById('canvas'); if(!canvas) return; const image = canvas.toDataURL('image/png'); const link = document.createElement('a'); const name = (currentVideoName || 'thumbnail') + '.png'; link.download = name; link.href = image; link.click(); }
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function updateOutputSize() {
+      outputWidth = parseInt(document.getElementById('outputWidth').value) || 720;
+      const outputHeight = Math.floor(outputWidth * aspectRatio);
+
+      const canvas = document.getElementById('canvas');
+      if (!canvas) return;
+
+      // set the actual canvas pixel buffer size (used when saving)
+      canvas.width = outputWidth;
+      canvas.height = outputHeight;
+
+      if (lastFullImage) {
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.onload = function() {
+          ctx.clearRect(0, 0, outputWidth, outputHeight);
+          ctx.drawImage(img, 0, 0, outputWidth, outputHeight);
+          document.getElementById('snapsize').textContent = `Size: ${outputWidth} × ${outputHeight} pixels`;
+        };
+        img.src = lastFullImage;
+      } else {
+        // update size info if no saved image yet
+        document.getElementById('snapsize').textContent = `Size: ${outputWidth} × ${outputHeight} pixels`;
+      }
+
+      // update the displayed sizes
+      updateDisplaySize();
+    }
+
+    function updateDisplaySize(value) {
+      // if value provided, update displayScale
+      if (value !== undefined && value !== null) {
+        displayScale = (Number(value) || 100) / 100;
+        document.getElementById('resizeValue').textContent = Math.round(displayScale * 100);
+      }
+
+      const canvas = document.getElementById('canvas');
+      if (!canvas) return;
+
+      // displayed width/height in px
+      const dispW = Math.floor(outputWidth * displayScale);
+      // use canvas.height (pixel height) as source for aspect ratio
+      const pixelH = canvas.height || Math.floor(outputWidth * aspectRatio);
+      const dispH = Math.floor(pixelH * displayScale);
+
+      const videoContainer = document.querySelector('.video-container');
+      if (videoContainer) {
+        videoContainer.style.width = `${dispW}px`;
+        videoContainer.style.height = `${dispH}px`;
+      }
+
+      canvas.style.width = `${dispW}px`;
+      canvas.style.height = `${dispH}px`;
+    }
+
+    // Make sure video controls are initialized when video loads
+    document.addEventListener('DOMContentLoaded', function() {
+      updateSliderTrack();
+      // ensure canvas has initial resolution and displayed size
+      updateOutputSize();
+      updateDisplaySize(100);
+      initVideoControls();
+
+      // wire slider track update for the seek slider
+      const seek = document.getElementById('slider');
+      if (seek) seek.addEventListener('input', updateSliderTrack);
+
+      // wire resize slider display text (in case it's changed by user)
+      const rs = document.getElementById('resizeSlider');
+      if (rs) rs.addEventListener('input', function(e) { updateDisplaySize(e.target.value); });
+    });
+
+    // Functions from app.js and slider.js would be included here
+    // For demonstration, I'll add placeholder implementations
+
+    function goToTime(video, time) {
+      if (!video) video = document.getElementById('video');
+      if (!video || isNaN(time)) return;
+      // clamp
+      time = Math.max(0, Math.min(time, video.duration || time));
+      video.currentTime = time;
+    }
+
+    function loadVideoFile() {
+      const fileInput = document.getElementById('videofile');
+      const file = fileInput.files[0];
+      if (file) {
+        const video = document.getElementById('video');
+        const videoURL = URL.createObjectURL(file);
+        video.src = videoURL;
+        video.load();
+
+        // Enable capture button
+        document.getElementById('snap').disabled = false;
+      }
+    }
+
+    function loadVideoURL(url) {
+      if (url) {
+        const video = document.getElementById('video');
+        video.src = url;
+        video.load();
+
+        // Enable capture button
+        document.getElementById('snap').disabled = false;
+      }
+    }
+
+    function snapPicture() {
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('canvas');
+      if (!video || !canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      // draw the current frame into the canvas pixel buffer (actual resolution)
+      // if original size is known, draw at that resolution, otherwise use canvas size
+      const drawW = canvas.width || outputWidth;
+      const drawH = canvas.height || Math.floor(drawW * aspectRatio);
+
+      // draw scaled frame into canvas buffer
+      try {
+        ctx.drawImage(video, 0, 0, drawW, drawH);
+      } catch (e) {
+        // some browsers restrict drawImage from cross-origin sources
+        console.warn('Could not draw video frame to canvas:', e);
+      }
+
+      // Store the full resolution frame (use the pixel buffer we've just drawn)
+      lastFullImage = canvas.toDataURL('image/png');
+
+      // Enable save button
+      document.getElementById('save').disabled = false;
+
+      // Update size info
+      document.getElementById('snapsize').textContent = `Size: ${canvas.width} × ${canvas.height} pixels`;
+    }
+
+    function savePicture() {
+      const canvas = document.getElementById('canvas');
+      if (!canvas) return;
+      const image = canvas.toDataURL('image/png');
+
+      // Create a temporary link for download
+      const link = document.createElement('a');
+      link.download = 'thumbnail.png';
+      link.href = image;
+      link.click();
+    }
   </script>
 </body>
 
