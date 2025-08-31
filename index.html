@@ -214,11 +214,6 @@
     let aspectRatio = 9/16; // height/width
     let currentVideoName = 'thumbnail';
 
-    function showInput(type) {
-  document.getElementById("fileInputWrapper").style.display = (type === "file") ? "block" : "none";
-  document.getElementById("urlInputWrapper").style.display = (type === "url") ? "flex" : "none";
-}
-
     function showInput(id){ document.getElementById('select-file').style.display='none'; document.getElementById('select-url').style.display='none'; document.getElementById(id).style.display='block'; }
 
     function updateSliderTrack(){ const s = document.getElementById('slider'); if(!s || !s.max) return; const p = (s.value / s.max)*100; s.style.background = `linear-gradient(to right, var(--primary-color) ${p}%, rgba(55,65,81,0.7) ${p}%)`; }
@@ -302,7 +297,12 @@
       lastFullImage = canvas.toDataURL('image/png'); document.getElementById('save').disabled = false; document.getElementById('snapsize').textContent = `Size: ${canvas.width} × ${canvas.height} pixels`; }
 
     function savePicture(){ const canvas = document.getElementById('canvas'); if(!canvas) return; const image = canvas.toDataURL('image/png'); const link = document.createElement('a'); const name = (currentVideoName || 'thumbnail') + '.png'; link.download = name; link.href = image; link.click(); }
-  </script>
+    function showInput(type) {
+  document.getElementById("fileInputWrapper").style.display = (type === "file") ? "block" : "none";
+  document.getElementById("urlInputWrapper").style.display = (type === "url") ? "flex" : "none";
+}
+  
+</script>
 </body>
 
 </html>
