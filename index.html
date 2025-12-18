@@ -54,7 +54,7 @@
     video { width:100%; height:100%; display:block; object-fit:contain; background:#000; }
     canvas { border-radius:8px; background:#000; display:block; max-width:100%; }
 
-    .content-grid { display:grid; grid-template-columns: 1fr 1fr; gap:24px; align-items:start; }
+    .content-grid { display:grid; grid-template-columns: 1fr 1fr; gap:24px; }
     .content-grid.stacked { grid-template-columns: 1fr; }
 
     .preview-center { display:flex; flex-direction:column; align-items:center; }
@@ -284,8 +284,8 @@
     function updatePlayPauseIcon(){ const video = document.getElementById('video'); const btn = document.getElementById('playPauseBtn'); if(!video || !btn) return; btn.textContent = video.paused ? '▶️' : '⏸'; }
 
     // derive a friendly name for the video to use as thumbnail filename
-    function setCurrentVideoNameFromFile(file){ if(!file) return; const name = file.name || 'thumbnail'; currentVideoName = name.replace(/\.[^/.]+$/, ''); document.getElementById('imagelink').textContent = `Filename: ${currentVideoName}.png`; }
-    function setCurrentVideoNameFromURL(url){ try{ const u = new URL(url); let last = u.pathname.split('/').pop() || ''; last = last.split('?')[0].split('#')[0]; if(last){ currentVideoName = last.replace(/\.[^/.]+$/, ''); } else { currentVideoName = 'thumbnail'; } document.getElementById('imagelink').textContent = `Filename: ${currentVideoName}.png`; } catch(e){ currentVideoName = 'thumbnail'; document.getElementById('imagelink').textContent = '';} }
+    function setCurrentVideoNameFromFile(file){ if(!file) return; const name = file.name || 'thumbnail'; currentVideoName = name.replace(/\.[^/.]+$/, ''); document.getElementById('imagelink').textContent = `Filename: ${currentVideoName}.jpg`; }
+    function setCurrentVideoNameFromURL(url){ try{ const u = new URL(url); let last = u.pathname.split('/').pop() || ''; last = last.split('?')[0].split('#')[0]; if(last){ currentVideoName = last.replace(/\.[^/.]+$/, ''); } else { currentVideoName = 'thumbnail'; } document.getElementById('imagelink').textContent = `Filename: ${currentVideoName}.jpg`; } catch(e){ currentVideoName = 'thumbnail'; document.getElementById('imagelink').textContent = '';} }
 
     function loadVideoFile(){ const fileInput = document.getElementById('videofile'); const file = fileInput.files[0]; if(!file) return; const video = document.getElementById('video'); const videoURL = URL.createObjectURL(file); video.src = videoURL; video.load(); document.getElementById('snap').disabled = false; setCurrentVideoNameFromFile(file); }
 
@@ -293,9 +293,20 @@
 
     function snapPicture(){ const video = document.getElementById('video'); const canvas = document.getElementById('canvas'); if(!video || !canvas) return; const ctx = canvas.getContext('2d'); const drawW = canvas.width || outputWidth; const drawH = canvas.height || Math.floor(drawW * aspectRatio);
       try{ ctx.drawImage(video, 0, 0, drawW, drawH); }catch(e){ console.warn('Could not draw video frame:', e); }
-      lastFullImage = canvas.toDataURL('image/png'); document.getElementById('save').disabled = false; document.getElementById('snapsize').textContent = `Size: ${canvas.width} × ${canvas.height} pixels`; }
+      lastFullImage = canvas.toDataURL('image/jpeg', 0.88); document.getElementById('save').disabled = false; document.getElementById('snapsize').textContent = `Size: ${canvas.width} × ${canvas.height} pixels`; }
 
-    function savePicture(){ const canvas = document.getElementById('canvas'); if(!canvas) return; const image = canvas.toDataURL('image/png'); const link = document.createElement('a'); const name = (currentVideoName || 'thumbnail') + '.png'; link.download = name; link.href = image; link.click(); }
+    function savePicture(){
+  const canvas = document.getElementById('canvas');
+  if(!canvas) return;
+
+  const image = canvas.toDataURL('image/jpeg', 0.88);
+  const link = document.createElement('a');
+  const name = (currentVideoName || 'thumbnail') + '.jpg';
+
+  link.download = name;
+  link.href = image;
+  link.click();
+}
     function showInput(type) {
   document.getElementById("fileInputWrapper").style.display = (type === "file") ? "block" : "none";
   document.getElementById("urlInputWrapper").style.display = (type === "url") ? "flex" : "none";
